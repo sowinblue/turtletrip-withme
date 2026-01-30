@@ -2,6 +2,8 @@
 .main-container{
     width: 400px;
     height: 800px;
+    background: #eee;
+    border: 2px solid red;
 }
 
 /* 거북이 구역 화면 비율, 배경색은 임의로 */
