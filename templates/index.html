@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurtleTrip</title>
+
+    <!-- 화면 스타일(css) 연결 -->
+    <link rel="stylesheet(!스타일규칙에따라 변경!)" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- 거북이 영역 (이미지 파일은 static/images/에 들어올 예정) -->
+    <div id="turtle-area">
+        <!--
+            거북이 이미지 위치
+            파일명 예시:
+            turtle_idle.png이면
+        -->
+        <!-- 실제 이미지는 B 1일차 작업 완료 후 연결예정 -->
+        <!--
+        <img src="{{ url_for('static', filename='images/turtle_idle.png') }}" alt="거북이"> 를 추가
+        -->
+    </div>
+
+    <!-- 체크리스트 영역 -->
+    <div id="list-area">
+        <!-- 할 일 목록이 들어올 영역 -->
+    </div>
+
+</body>
+</html>
