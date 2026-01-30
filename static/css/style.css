@@ -1,7 +1,7 @@
 /* 크기 조정 */
 .main-container{
-    width: 400px;
-    height: 800px;
+    width: 1400px;
+    height: 650px;
     background: #eee;
     border: 2px solid red;
 }
