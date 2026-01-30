@@ -27,11 +27,6 @@ def index():
     #index.html 파일을 화면에 보여줌
     return render_template("index.html")
 
-# 이 파일을 직접 실행했을 때만 서버 실행
-if __name__ == '__main__':
-    # 서버 실행(코드 수정 시 자동 반영)
-    app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
-
 # 사용자가 보낸 데이터를 받기 
 @app.route('/update_todo', methods=['POST']) # /update_todo는 html에 있습니다!
 def update_todo():
@@ -44,3 +39,9 @@ def update_todo():
     print(f"할 일: {content}, 완료 여부: {is_done}") # 터미널에서 확인용
     
     return "데이터를 잘 받았어요!" # 나중에는 다시 메인화면으로 보낼 거예요
+
+# 이 파일을 직접 실행했을 때만 서버 실행
+if __name__ == '__main__':
+    # 서버 실행(코드 수정 시 자동 반영)
+    app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
+
