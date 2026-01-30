@@ -1,12 +1,12 @@
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <!-- style.css 연결, Flask의 url_for를 사용해 정확한 경로를 자동 생성 -->
 </head>
-<body>
-    <div class="main-container">
-        <section class="turtle-section">
+<body> <!-- 브라우저 구역 나누기 -->
+    <div class="main-container"> <!-- 전체를 감싸는 큰 컨테이너 -->
+        <section class="turtle-section"> <!-- 상단 : 거북이와 프로그레스 바 구역 -->
             <h2>거북이 경로</h2>
         </section>
-        <section class="checklist-section">
+        <section class="checklist-section"> <!-- 하단 : 체크리스트 구역 -->
             <h2>체크리스트</h2>
         </section>
     </div>
