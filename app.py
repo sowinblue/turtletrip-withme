@@ -13,7 +13,21 @@ def get_user_progress():
     except FileNotFoundError:
         # 파일이 없을 경우를 대비
         return{"tasks": []}
-    
+
+
+# 진행률(=달성률)을 계산하는 함수
+# - 할 일 목록(tasks)을 받아서
+# - 완료된 항목 비율을 %로 계산해 반환할 예정
+# 현재는 구조만 잡아둔 상태
+def calculate_progress(tasks):
+    # 전체 할 일 개수
+    total_count = len(tasks)
+
+    # 아직 로직을 붙이지 않았으므로
+    # 임시로 0을 반환
+    return 0
+
+
 
 #메인페이지("/") 접속시 실행되는 함수
 @app.route('/')
