@@ -33,7 +33,7 @@ def calculate_progress(tasks):
 @app.route('/')
 def index():
     # tasks.json 데이터 가져오기
-    data = load_tasks()
+    data = get_user_progress()
 
     # 데이터가 잘 읽혔는지 터미널에서 확인하기
     print("현재 tasks.json 데이터:", data)
