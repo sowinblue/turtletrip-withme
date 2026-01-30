@@ -25,7 +25,11 @@ def index():
     print("현재 tasks.json 데이터:", data)
 
     #index.html 파일을 화면에 보여줌
+<<<<<<< HEAD
     return render_template("index.html", todos=data.get("user1", []))
+=======
+    return render_template("index.html")
+>>>>>>> 5d41be769e2c52fdb8113485ed4c7a497d9621ac
 
 # 사용자가 보낸 데이터를 받기 
 @app.route('/update_todo', methods=['POST']) # /update_todo는 html에 있습니다!
@@ -43,4 +47,9 @@ def update_todo():
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
     # 서버 실행(코드 수정 시 자동 반영)
+<<<<<<< HEAD
     app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
+=======
+    app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
+
+>>>>>>> 5d41be769e2c52fdb8113485ed4c7a497d9621ac
