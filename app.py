@@ -34,7 +34,7 @@ def update_todo():
     content = request.form.get('todo_content')
 
     # 2. 체크박스 상태 확인 (체크 안 되면 None이 들어옵니다)
-    is_done = request.form.get('is_done') == 'true'
+    is_done = request.form.get('is_true') == 'true'
     
     print(f"할 일: {content}, 완료 여부: {is_done}") # 터미널에서 확인용
     
