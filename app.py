@@ -7,7 +7,6 @@
 #         is_completed_count += 1
 
 import json
-import flask
 
 def get_user_progress():
     try:
@@ -29,6 +28,10 @@ def get_user_progress():
 # U: 할일 수정 기능 (버튼 어디에?)
 # D: 할일 삭제 기능 (버튼 어디에?2)
 
-# 실행 및 결과 확인
-result = get_user_progress()
-print(result)
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def home():
+	return "<h1>Flask 서버가 정상적으로 실행 중입니다!</h1>"
+if __name__ == '__main__':
+	app.run(debug=True)
