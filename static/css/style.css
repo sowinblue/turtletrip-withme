@@ -12,6 +12,23 @@
     background: rgb(25, 11, 40)
 }
 
+.turtle_movezone-section{ /*거북이가 돌아다닐 영역_수빈 22*/
+    max-width: 700px; /*지정한 너비보다 커지지 않게 막음 */
+    top: 40px;/*위쪽 여백_요소의 절대적인 위치 좌표*/ 
+    margin: 0 auto;   /* 화면 중앙 정렬 */
+    padding: 60px;  /* 좌우 여백 확보_박스 내부 */
+    background: rgb(255, 255, 255);
+
+    position: relative /*img 이동의 기준*/
+}
+
+.turtle_img{ /*거북이 css_수빈 22*/
+    position: absolute; /*movezone 기준으로 움직일겡*/
+    left: 10px;  /* 왼쪽에 100px 여백 줌 */
+    top: 60px;   /* 위에 60px 여백 줌 */
+}
+
+
 /* 체크리스트 구역 화면 비율, 배경색은 임의로 */
 .checklist-section{
     height: 70%;
