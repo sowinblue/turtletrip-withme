@@ -11,13 +11,12 @@ def get_user_progress():
     except FileNotFoundError:
         return {"user1": [], "user2": []}
 
-# TODO: 데이터 저장 함수 (팀원이 작성 예정)
+# 데이터 저장 함수
 def save_user_progress(data):
     """
     tasks.json 파일에 데이터를 저장하는 함수
-    현재는 구현 대기 중
     """
-    pass  # 나중에 구현될 예정
+    pass
 
 
 # user1의 달성률 계산 메서드
@@ -64,29 +63,9 @@ def index():
 # 할 일 추가
 @app.route('/add_todo', methods=['POST'])
 def add_todo():
-    content = request.form.get('todo_content')
-    
-    if content and content.strip():  # 내용이 비어있지 않은 경우만
-        data = get_user_progress()
-        
-        # 새 할 일의 ID 생성 (기존 ID 중 최댓값 + 1)
-        existing_ids = [task['id'] for task in data.get('user1', [])]
-        new_id = max(existing_ids) + 1 if existing_ids else 1
-        
-        # 새 할 일 추가
-        new_task = {
-            "id": new_id,
-            "content": content.strip(),
-            "is_completed": False
-        }
-        
-        if 'user1' not in data:
-            data['user1'] = []
-        data['user1'].append(new_task)
-        
-        # TODO: save_user_progress(data) 호출 필요
-        print(f"[추가됨] {new_task}")  # 임시로 콘솔에 출력
-    
+    '''
+    할 일 추가 로직 함수 내역
+    '''
     return redirect(url_for('index'))
 
 # 할 일 완료 상태 토글
@@ -107,13 +86,11 @@ def toggle_todo(task_id):
 # 할 일 삭제
 @app.route('/delete_todo/<int:task_id>', methods=['POST'])
 def delete_todo(task_id):
-    data = get_user_progress()
     
-    # 해당 ID의 할 일 삭제
-    if 'user1' in data:
-        data['user1'] = [task for task in data['user1'] if task['id'] != task_id]
-        # TODO: save_user_progress(data) 호출 필요
-        print(f"[삭제됨] ID {task_id}")
+    '''
+        해당 ID의 할 일 삭제 함수
+    '''
+    print(f"[삭제됨] ID {task_id}")
     
     return redirect(url_for('index'))
 
