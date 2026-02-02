@@ -14,6 +14,14 @@ def get_user_progress():
         # 파일이 없을 경우를 대비
         return{"tasks": []}
 
+# tasks.json 파일에 데이터를 저장하는 함수
+def save_tasks(data):
+    # tasks.josn 파일 열어서 write 모드로 - w 모드는 기존 내용 전부 삭제 후 다시 씀.
+    with open('tasks.json', 'w', encoding='utf-8') as f:
+        # 파이썬 데이터를 JSON 문자열로 바꿔서 파일에 저장
+        json.dump(data, f, ensure_ascii=False, indent=4)
+        # ensure_ascii=False를 써야 한글이 깨지지 않고 저장됨.
+        # indent=4를 주면 파일이 예쁘게 정렬됨.
 
 #메인페이지("/") 접속시 실행되는 함수
 @app.route('/')
@@ -24,15 +32,14 @@ def index():
     # 데이터가 잘 읽혔는지 터미널에서 확인하기
     print("현재 tasks.json 데이터:", data)
 
-    #index.html 파일을 화면에 보여줌
+    # index.html 파일을 화면에 보여줌
     return render_template("index.html")
 
-# 사용자가 보낸 데이터를 받기 
+# 사용자가 보낸 데이터를 받기
 @app.route('/update_todo', methods=['POST']) # /update_todo는 html에 있습니다!
 def update_todo():
     # 1. 텍스트 박스 내용 가져오기
     content = request.form.get('todo_content')
-
     # 2. 체크박스 상태 확인 (체크 안 되면 None이 들어옵니다)
     is_done = request.form.get('is_done') == 'done'
     
