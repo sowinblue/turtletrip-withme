@@ -19,6 +19,12 @@
         <section class="turtle-section">
             <h2>거북이의 여행 🐢</h2>
 
+            <div class = "turtle_moveline-section"> <!--거북이 이동 가능 구역-->
+            <div class = "turtle_img"> <!--거북이 구역-->
+                <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle_idle.svg') }}", alt="거북이 대기", width="90", height="90"><!--거북이-->
+            </div>
+            </div>
+
             <!-- 진행률 바 (2월2일 A/B 담당자가 width 값 제어 예정!!) -->
             <div class="progress-container">
                 <div class="progress-track">
@@ -73,7 +79,7 @@
         });
         </script>
 
-        <!-- main.js에 코드 옮기면 위의 script 코드 이걸로 교체 <script src="{{ url_for('static', filename='js/main.js') }}"></script> */ -->
+        <!-- main.js에 코드 옮기면 위의 script 코드 이걸로 <script src="{{ url_for('static', filename='js/main.js') }}"></script> */ -->
 
 </body>
 </html>

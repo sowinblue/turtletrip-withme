@@ -69,7 +69,7 @@ body {
 /*진행률 바 컨테이너*/
 .progress-container {
     position: absolute; /*거북이 영역 바닥에 붙이기*/
-    bottom: 20px;
+    bottom: 155px;
     left: 20px;
     right: 20px;
 }
@@ -161,4 +161,18 @@ body {
 .todo-item.completed .todo-text {
     text-decoration: line-through;
     color: #ccc;
+}
+
+.turtle_moveline-section{ /*거북이가 돌아다닐 영역_수빈 22*/
+    height: 4px; 
+    max-width: 1000px; /*지정한 너비보다 커지지 않게 막음 */
+    top: 200px;/*위쪽 여백_요소의 절대적인 위치 좌표*/ 
+    margin: 0 auto;   /* 화면 중앙 정렬_(전체 화면 - max-width => 남은 px 둘로 나눠서 양옆에 붙임)*/
+    position: relative /*img 이동의 기준*/
+}
+
+.turtle_img{ /*거북이 css_수빈 22*/
+    left: 10px;  /* 왼쪽에 100px 여백 줌 */
+    bottom: 70px;
+    position: absolute; /*movezone 기준으로 움직일게*/
 }
