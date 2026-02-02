@@ -39,10 +39,20 @@ def index():
 # 사용자가 보낸 데이터를 받기
 @app.route('/update_todo', methods=['POST']) # /update_todo는 html에 있습니다!
 def update_todo():
-    # 1. 텍스트 박스 내용 가져오기
+    # 텍스트 박스 내용 가져오기
     content = request.form.get('todo_content')
-    # 2. 체크박스 상태 확인 (체크 안 되면 None이 들어옵니다)
+    # 고유 ID 생성(uuid 활용)
+    # 너무 길면 8자리만 잘라서 쓸 수도 있음.
+    task_id = str(uuid.uuid4())[:8]
+    # 체크박스 상태 확인 (체크 안 되면 None이 들어옵니다)
     is_done = request.form.get('is_done') == 'done'
+    # 새 데이터 객체 만들기
+    new_task = {
+        "id": task_id,  # 고유 id 부여
+        "content": content, # 내용
+        "is_done": is_done # 사용자가 체크했는지에 따라 결정
+    }
+
     
     print(f"할 일: {content}, 완료 여부: {is_done}") # 터미널에서 확인용
     
