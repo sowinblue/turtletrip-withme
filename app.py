@@ -24,6 +24,28 @@ def save_tasks(data):
         # ensure_ascii=False를 써야 한글이 깨지지 않고 저장됨.
         # indent=4를 주면 파일이 예쁘게 정렬됨.
 
+# user1의 달성률 계산 메서드
+def calculate_completion_rate():
+    """
+    할 일 달성률을 계산하는 함수
+    
+    Returns:
+        달성률 (0~100 사이의 정수)
+    """
+    data = get_user_progress() # 저장된 모든 데이터 가져오기
+    is_done_list = [task.get('is_done') for task in data.get('tasks', [])] # is_done 값만 뽑아오기
+
+    count = 0
+    for completed in is_done_list:
+        if completed == True:
+            count += 1
+            
+    completion_rate = count / len(is_done_list) * 100
+    print(f'현재 달성률: {completion_rate}%')
+    
+    return completion_rate
+
+
 #메인페이지("/") 접속시 실행되는 함수
 @app.route('/')
 def index():
@@ -33,8 +55,9 @@ def index():
     # 데이터가 잘 읽혔는지 터미널에서 확인하기
     print("현재 tasks.json 데이터:", data)
 
+    calculation_rate = calculate_completion_rate()
     # index.html 파일을 화면에 보여줌 (tasks 데이터를 함께 전달)
-    return render_template("index.html", tasks=data['tasks'])
+    return render_template("index.html", tasks=data['tasks'], rate=calculation_rate)
 
 # 사용자가 보낸 데이터를 받기
 @app.route('/update_todo', methods=['POST'])
