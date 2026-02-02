@@ -44,4 +44,3 @@ def update_todo():
 if __name__ == '__main__':
     # 서버 실행(코드 수정 시 자동 반영)
     app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
-
