@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request   #flask를 사용해서 웹 서버를 만들겠다
-import json #json 파일을 읽기 위해 사용
-import uuid # 파이썬에 기본으로 내장된 uuid라는 도구를 쓰면, 전 세계에서 단 하나뿐인 복잡한 문자열 ID를 만들어준다.
+from flask import Flask, render_template, request, redirect, url_for
+import json
+import uuid
 
-app = Flask(__name__)  #flask 앱 생성(웹서버 본체)
+app = Flask(__name__)
 
 # tasks.json 파일을 읽어오는 함수
 def get_user_progress():
@@ -33,11 +33,11 @@ def index():
     # 데이터가 잘 읽혔는지 터미널에서 확인하기
     print("현재 tasks.json 데이터:", data)
 
-    # index.html 파일을 화면에 보여줌
-    return render_template("index.html")
+    # index.html 파일을 화면에 보여줌 (tasks 데이터를 함께 전달)
+    return render_template("index.html", tasks=data['tasks'])
 
 # 사용자가 보낸 데이터를 받기
-@app.route('/update_todo', methods=['POST']) # /update_todo는 html에 있습니다!
+@app.route('/update_todo', methods=['POST'])
 def update_todo():
     # 텍스트 박스 내용 가져오기
     content = request.form.get('todo_content')
@@ -62,11 +62,9 @@ def update_todo():
     print(f"새로운 할 일이 저장되었습니다: {new_task}") # 터미널에서 확인용
     
     # 저장 후 다시 메인 화면으로 돌아가기
-    from flask import redirect, url_for
     return redirect(url_for('index'))
 
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
     # 서버 실행(코드 수정 시 자동 반영)
     app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
-
