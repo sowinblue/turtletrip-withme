@@ -49,8 +49,6 @@ def update_todo():
     # 고유 ID 생성(uuid 활용)
     # 너무 길면 8자리만 잘라서 쓸 수도 있음.
     task_id = str(uuid.uuid4())[:8]
-    # 체크박스 상태 확인 (체크 안 되면 None이 들어옵니다)
-    is_done = request.form.get('is_done') == 'done'
     # 새 데이터 객체 만들기
     new_task = {
         "id": task_id,  # 고유 id 부여

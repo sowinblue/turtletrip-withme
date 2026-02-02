@@ -1,12 +1,5 @@
 {
-    "user1":
-    [
-        {"id": 1, "content": "샘플 할 일", "is_completed": false},
-        {"id": 2, "content": "두 번째 할 일", "is_completed": true} 
-    ],
-    "user2":
-    [
-        {"id": 1, "content": "파이썬 공부하기", "is_completed": false},
-        {"id": 2, "content": "거북이 키우기", "is_completed": true}
+    "tasks": [
+        {"id": "init-1", "content": "샘플 할 일", "is_done": false}
     ]
 }
