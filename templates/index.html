@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 기본 메타 정보 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 페이지 제목 -->
     <title>TurtleTrip</title>
 
+    <!-- 공통 스타일 파일 연결 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <!-- 전체 화면을 감싸는 메인 컨테이너 -->
     <div class="main-container">
 
+        <!-- 상단: 거북이 경로 + 진행률 상태바 영역 -->
         <section class="turtle-section">
             <h2>거북이의 여행 🐢</h2>
-            
+
+            <!-- 진행률 바 (2월2일 A/B 담당자가 width 값 제어 예정!!) -->
             <div class="progress-container">
                 <div class="progress-track">
                     <div id="turtle-progress-bar" class="progress-fill" style="width: 50%;">
-                        <span class="progress-text">50%</span> # UI확인용 예시로 50퍼로 설정
+                        <span class="progress-text">50%</span>
                     </div>
                 </div>
             </div>
-            </section>
+        </section>
 
+        <!-- 하단: 체크리스트 UI 영역 -->
         <section class="checklist-section">
-            <h2>체크리스트</h2>
+            <h3>오늘의 할 일</h3>
 
-            <form action="/update_todo" method="POST" class="todo-form">
-                <div class="todo-item">
-
-                    <label>
-                        <input type="checkbox" name="is_done" value="done">
-                        완료
-                    </label>
-
-                    <input
-                        type="text"
-                        name="todo_content"
-                        placeholder="오늘 할 일을 입력하세요!"
-                    >
-
-                    <button type="submit">저장</button>
-                </div>
+            <!-- 할 일 추가 입력 폼 -->
+            <form action="/update_todo" method="POST" class="input-group">
+                <input type="text" name="todo_content" class="input-box" placeholder="할 일 입력!" required>
+                <button type="submit" class="add-btn">추가</button>
             </form>
 
+            <!-- 할 일 목록 영역 (스크롤 대상) -->
+            <div class="todo-list container">
+
+                <!-- 미완료 항목 예시 -->
+                <div class="todo-item">
+                    <input type="checkbox" class="real-checkbox">
+                    <span class="todo-text">파이썬 공부하기(예시1)</span>
+                    <button class="delete-btn">삭제</button>
+                </div>
+
+                <!-- 완료된 항목 예시 -->
+                <div class="todo-item completed">
+                    <input type="checkbox" class="real-checkbox" checked>
+                    <span class="todo-text">팀원들이랑 회의하기(예시2)</span>
+                    <button class="delete-btn">삭제</button>
+                </div>
+
+            </div>
         </section>
     </div>
 </body>
