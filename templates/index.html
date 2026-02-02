@@ -6,7 +6,12 @@
 <body> <!-- 브라우저 구역 나누기 -->
     <div class="main-container"> <!-- 전체를 감싸는 큰 컨테이너 -->
         <section class="turtle-section"> <!-- 상단 : 거북이와 프로그레스 바 구역 -->
-            <h2>거북이 경로</h2>
+            <div class = "turtle_movezone-section"> <!--거북이 이동 가능 구역-->
+            <div class = "turtle_img"> <!--거북이 구역-->
+                <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle_idle.svg') }}", alt="거북이 대기", width="90", height="90"><!--거북이-->
+            </div>
+            </div>
+            
         </section>
         <section class="checklist-section"> <!-- 하단 : 체크리스트 구역 -->
             <h2>체크리스트</h2>
