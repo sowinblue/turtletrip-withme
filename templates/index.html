@@ -5,28 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurtleTrip</title>
 
-    <!-- 화면 스타일(css) 연결 -->
-    <link rel="stylesheet(!스타일규칙에따라 변경!)" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- 공통 스타일 파일 (Flask static 폴더 사용) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
+    <!-- 전체 화면을 감싸는 메인 컨테이너 -->
+    <div class="main-container">
 
-    <!-- 거북이 영역 (이미지 파일은 static/images/에 들어올 예정) -->
-    <div id="turtle-area">
-        <!--
-            거북이 이미지 위치
-            파일명 예시:
-            turtle_idle.png이면
-        -->
-        <!-- 실제 이미지는 B 1일차 작업 완료 후 연결예정 -->
-        <!--
-        <img src="{{ url_for('static', filename='images/turtle_idle.png') }}" alt="거북이"> 를 추가
-        -->
+        <!-- 상단 영역 : 거북이 진행 상태 표시 -->
+        <section class="turtle-section">
+            <h2>거북이 경로</h2>
+
+            <!--
+                거북이 이미지 위치
+                static/images/ 경로에 이미지 추가 후 사용
+                예: turtle_idle.png
+            -->
+            <!--
+            <img src="{{ url_for('static', filename='images/turtle_idle.png') }}" alt="거북이">
+            -->
+        </section>
+
+        <!-- 하단 영역 : 오늘의 할 일 체크리스트 -->
+        <section class="checklist-section">
+            <h2>체크리스트</h2>
+
+            <!-- 할 일 추가 폼
+                입력값은 /update_todo 라우트로 POST 전송 -->
+            <form action="/update_todo" method="POST" class="todo-form">
+                <div class="todo-item">
+                    <input type="text" id="task-input" placeholder="할 일을 입력하세요"/>
+                    <input type="text" name="todo_content" placeholder="오늘 할 일을 입력하세요!">
+                    <button type="submit">저장</button>
+                </div>
+            </form>
+        </section>
+
     </div>
-
-    <!-- 체크리스트 영역 -->
-    <div id="list-area">
-        <!-- 할 일 목록이 들어올 영역 -->
-    </div>
-
 </body>
 </html>
