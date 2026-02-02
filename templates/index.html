@@ -7,16 +7,17 @@
     <div class="main-container">
         <section class="turtle-section">
             <h2>거북이 경로</h2>
+            <div>달성률: {{ rate }}</div> <!-- 서버의 index 함수가 보내준 rate 값을 출력해주기 (rate=calculation_rate)-->
         </section>
         <section class="checklist-section">
             <h2>체크리스트</h2>
             
             <!-- 기존에 저장된 할 일 목록 표시 -->
             <div class="saved-tasks">
-                {% for task in tasks %}
-                <div class="todo-item saved">
+                {% for task in tasks %} <!-- 메인(index) 함수에서 리턴해준 내부 데이터 전체를 불러오기. tasks=data['tasks'] -->
+                <div class="todo-item saved"> 
                     <input type="checkbox" {% if task.is_done %}checked{% endif %} disabled>
-                    <span class="task-content {% if task.is_done %}done{% endif %}">{{ task.content }}</span>
+                    <span class="task-content {% if task.is_done %}done{% endif %}">{{ task.content }}</span> <!-- 불러온 내부 데이터의 content 가져와서 출력해주기 (task.content)-->
                 </div>
                 {% endfor %}
             </div>
