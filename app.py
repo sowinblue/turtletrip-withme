@@ -41,6 +41,11 @@ def index():
 def update_todo():
     # 텍스트 박스 내용 가져오기
     content = request.form.get('todo_content')
+    # 입력값이 비어있는지 확인하기
+    if not content or content.strip() == "":
+        return "할 일을 입력해주세요!", 400
+    # 기존 데이터 가져오기
+    data = get_user_progress()
     # 고유 ID 생성(uuid 활용)
     # 너무 길면 8자리만 잘라서 쓸 수도 있음.
     task_id = str(uuid.uuid4())[:8]
@@ -50,13 +55,17 @@ def update_todo():
     new_task = {
         "id": task_id,  # 고유 id 부여
         "content": content, # 내용
-        "is_done": is_done # 사용자가 체크했는지에 따라 결정
+        "is_done": request.form.get('is_done') == 'done' # 사용자가 체크했는지에 따라 결정
     }
-
+    # 기존 리스트에 추가하고 파일에 저장
+    data['tasks'].append(new_task)
+    save_tasks(data)
     
-    print(f"할 일: {content}, 완료 여부: {is_done}") # 터미널에서 확인용
+    print(f"새로운 할 일이 저장되었습니다: {new_task}") # 터미널에서 확인용
     
-    return "데이터를 잘 받았어요!" # 나중에는 다시 메인화면으로 보낼 거예요
+    # 저장 후 다시 메인 화면으로 돌아가기
+    from flask import redirect, url_for
+    return redirect(url_for('index'))
 
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
