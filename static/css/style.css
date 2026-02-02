@@ -1,19 +1,117 @@
-/* 크기 조정 */
-.main-container{
-    width: 1400px;
-    height: 650px;
-    background: #eee;
-    border: 2px solid red;
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
 }
 
-/* 거북이 구역 화면 비율, 배경색은 임의로 */
-.turtle-section{
-    height: 30%;
-    background: rgb(25, 11, 40)
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
 }
 
-/* 체크리스트 구역 화면 비율, 배경색은 임의로 */
-.checklist-section{
-    height: 70%;
-    background: #085cb0
+/* 거북이 섹션 */
+.turtle-section {
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.turtle-section h2 {
+    color: #4CAF50;
+    margin: 0;
+}
+
+/* 체크리스트 섹션 */
+.checklist-section {
+    padding: 20px;
+}
+
+.checklist-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 저장된 할 일 목록 */
+.saved-tasks {
+    margin-bottom: 20px;
+}
+
+/* 할 일 아이템 */
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+.todo-item.saved {
+    background-color: #f0f0f0;
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.todo-item input[type="checkbox"]:disabled {
+    cursor: default;
+}
+
+.todo-item input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.todo-item input[type="text"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+/* 할 일 내용 텍스트 */
+.task-content {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.task-content.done {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* 저장 버튼 */
+.todo-item button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.todo-item button:hover {
+    background-color: #45a049;
+}
+
+/* 새 할 일 추가 폼 */
+.todo-form .todo-item {
+    background-color: #e8f5e9;
+    border-color: #4CAF50;
 }
