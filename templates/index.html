@@ -10,6 +10,15 @@
     <div class="main-container">
         <section class="turtle-section">
             <h2>거북이 경로</h2>
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="progress-label">달성률</span>
+                    <span class="progress-percentage">{{ completion_rate }}%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ completion_rate }}%;"></div>
+                </div>
+            </div>
         </section>
         
         <section class="checklist-section">

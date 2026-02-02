@@ -19,6 +19,34 @@ def save_user_progress(data):
     """
     pass  # 나중에 구현될 예정
 
+
+# user1의 달성률 계산 메서드
+def calculate_completion_rate(user_id='user1'):
+    """
+    특정 사용자의 할 일 달성률을 계산하는 함수
+    
+    Args:
+        user_id: 사용자 ID (기본값: 'user1')
+    
+    Returns:
+        달성률 (0~100 사이의 정수)
+    """
+    data = get_user_progress()
+    tasks = data.get(user_id, [])
+    
+    # 할 일이 없으면 0% 반환
+    if not tasks:
+            return 0
+        
+    # 완료된 할 일 개수 세기
+    completed_tasks = [task for task in tasks if task.get('is_completed', False)]
+    
+    # 달성률 계산 (소수점 반올림)
+    completion_rate = round((len(completed_tasks) / len(tasks)) * 100)
+    
+    return completion_rate
+
+
 # 메인페이지
 @app.route('/')
 def index():
@@ -27,7 +55,11 @@ def index():
     
     # user1의 할 일 목록을 HTML로 전달
     user_tasks = data.get('user1', [])
-    return render_template("index.html", tasks=user_tasks)
+    
+    # 달성률 계산
+    completion_rate = calculate_completion_rate('user1')
+    
+    return render_template("index.html", tasks=user_tasks, completion_rate=completion_rate)
 
 # 할 일 추가
 @app.route('/add_todo', methods=['POST'])

@@ -9,7 +9,8 @@
 /* 거북이 구역 화면 비율, 배경색은 임의로 */
 .turtle-section{
     height: 30%;
-    background: rgb(25, 11, 40)
+    background: rgb(25, 11, 40);
+    color: red
 }
 
 /* 체크리스트 구역 화면 비율, 배경색은 임의로 */
