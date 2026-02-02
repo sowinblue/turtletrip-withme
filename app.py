@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request   #flask를 사용해서 웹 서버를 만들겠다
 import json #json 파일을 읽기 위해 사용
+import uuid # 파이썬에 기본으로 내장된 uuid라는 도구를 쓰면, 전 세계에서 단 하나뿐인 복잡한 문자열 ID를 만들어준다.
 
 app = Flask(__name__)  #flask 앱 생성(웹서버 본체)
 
