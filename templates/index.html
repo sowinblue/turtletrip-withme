@@ -48,16 +48,16 @@
             <!-- 할 일 목록 영역 (스크롤 대상) -->
             <div class="todo-list-container">
 
-                <!-- 미완료 항목 예시 -->
+                <!-- 항목 예시 -->
                 <div class="todo-item">
                     <input type="checkbox" class="real-checkbox">
                     <span class="todo-text">파이썬 공부하기(예시1)</span>
                     <button class="delete-btn">삭제</button>
                 </div>
 
-                <!-- 완료된 항목 예시 -->
-                <div class="todo-item completed">
-                    <input type="checkbox" class="real-checkbox" checked>
+                <!-- 항목 예시 -->
+                <div class="todo-item">
+                    <input type="checkbox" class="real-checkbox">
                     <span class="todo-text">팀원들이랑 회의하기(예시2)</span>
                     <button class="delete-btn">삭제</button>
                 </div>
@@ -65,21 +65,7 @@
         </section>
     </div>
 
-        <script>
-        /* HTML이 전부 로드된 뒤 체크박스 이벤트 연결 */
-        document.addEventListener('DOMContentLoaded', () => {
-            /* 모든 할 일 체크박스에 대해 */
-            document.querySelectorAll('.real-checkbox').forEach(checkbox => {
-                /* 체크 상태 변경 시 완료 클래스 토글 */
-                checkbox.addEventListener('change', () => {
-                    const todoItem = checkbox.closest('.todo-item');
-                    todoItem.classList.toggle('completed', checkbox.checked);
-                });
-            });
-        });
-        </script>
-
-        <!-- main.js에 코드 옮기면 위의 script 코드 이걸로 <script src="{{ url_for('static', filename='js/main.js') }}"></script> */ -->
-
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
 </body>
 </html>
