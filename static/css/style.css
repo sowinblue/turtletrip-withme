@@ -1,19 +1,47 @@
-/* 크기 조정 */
-.main-container{
-    width: 1400px;
-    height: 650px;
-    background: #eee;
-    border: 2px solid red;
+/* 기본 설정 및 색상 변수 */
+:root {
+    --bg-color: #f4f7f6;
+    --turtle-bg-top: #5da2de; /*하늘빛*/
+    --turtle-bg-bot: #3296e8; /*바다빛*/
+    --checklist-bg: #ffffff;
 }
 
-/* 거북이 구역 화면 비율, 배경색은 임의로 */
-.turtle-section{
-    height: 30%;
-    background: rgb(25, 11, 40)
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /*화면 꽉 채우기*/
 }
 
-/* 체크리스트 구역 화면 비율, 배경색은 임의로 */
-.checklist-section{
-    height: 70%;
-    background: #085cb0
+/* 메인 컨테이너 */
+.main-container {
+    width: 1100px;
+    height: 700px;
+    background: var(--checklist-bg);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /*위아래 배치*/
+}
+
+/* 상단 : 거북이 영역 35%비중 */
+.turtle-section {
+    flex: 0.35;
+    background: linear-gradient(to bottom, var(--turtle-bg-top), var(--turtle-bg-bot));
+    padding: 20px;
+    color: white;
+    position: relative; /*나중에 거북이 위치 잡을 때 기준점!*/
+}
+
+/* 하단 : 체크리스트 영역 65%비중 */ 
+.checklist-section {
+    flex: 0.65;
+    background-color: var(--checklist-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
