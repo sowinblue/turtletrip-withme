@@ -157,7 +157,7 @@ body {
     cursor: pointer;
 }
 
-/* 완료된 항목 (.completed 클래스가 붙으면 흐리게) */
+/* 완료된 항목 */
 .todo-item.completed .todo-text {
     text-decoration: line-through;
     color: #ccc;
