@@ -1,9 +1,0 @@
-.turtle {
-  /* 위치가 바뀔 때 2초 동안 아주 부드럽게 이동 */
-  transition: transform 2s ease-in-out;
-}
-
-/* 체크박스가 체크되었을 때 거북이 이동 */
-input:checked ~ .turtle {
-  transform: translateX(200px);
-}
