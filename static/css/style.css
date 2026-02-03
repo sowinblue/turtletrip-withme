@@ -58,7 +58,7 @@ body {
 }
 
 /*거북이 css_수빈 22*/
-.turtle_img {
+.turtle_container {
     position: absolute;
     bottom: 0;
     transition: left 0.5s ease; /* 부드러운 이동 */
