@@ -41,7 +41,7 @@
                 
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
                     
-                    <label class="checkbox-label" onclick="location.href='/toggle_todo/{{ task.id }}'">
+                    <label class="checkbox-label">
                         <input type="checkbox" class="real-checkbox" {% if task.is_done %}checked{% endif %}>
                         <span class="checkmark"></span>
                     </label>
