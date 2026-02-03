@@ -1,0 +1,36 @@
+/* 더보기 메뉴 스타일 */
+.more-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-btn {
+    background: none; border: none; font-size: 20px; cursor: pointer; padding: 0 5px;
+}
+
+.menu-content {
+    display: none; /* 기본 숨김 */
+    position: absolute; right: 0; background: white;
+    border: 1px solid black; border-radius: 4px; z-index: 20;
+    min-width: 60px;
+}
+
+/* 메뉴 버튼에 마우스 올리거나 클릭 시 표시 (JS/CSS 조합) */
+.more-menu:hover .menu-content {
+    display: block;
+}
+
+.menu-content button {
+    display: block; width: 100%; padding: 5px 10px;
+    border: none; background: none; text-align: left; cursor: pointer;
+}
+
+.menu-content button:hover { background: #f0f0f0; }
+
+/* 수정 모드 스타일 */
+.edit-mode-container {
+    display: flex; gap: 5px; width: 100%;
+}
+.edit-input {
+    flex: 1; border: 1px solid var(--status-blue); border-radius: 4px; padding: 4px;
+}
