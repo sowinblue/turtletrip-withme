@@ -119,6 +119,13 @@ def delete_todo(task_id):
     save_tasks(data)
     return redirect(url_for('index'))
 
+@app.route('/api/progress')
+def get_progress_api():
+    # 이미 만들어두신 계산 함수를 호출합니다.
+    rate = calculate_completion_rate()
+    # 자바스크립트가 읽을 수 있도록 JSON 형식으로 반환합니다.
+    return {"progress": rate}
+
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
     # 서버 실행(코드 수정 시 자동 반영)
