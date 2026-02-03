@@ -7,34 +7,28 @@
     
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/turtle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}"> <!-- 각 스타일시트 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container"> <!-- 메인 컨테이너 -->
-        <header class="journey-box"><!-- 거북이 + 달성률 상태바 컨테이너 -->
-            <div class="inner-ocean"> <!-- 파도 박스 -->
-                <div class="wave-bg"></div> 
-                <div class="progress-bar-wrapper"> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
-                    <div id="horizontal-progress-fill"></div> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
-                </div>
-                <div id="turtle-group" class="turtle-container"> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
-                    <div class="turtle-char">🐢</div> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
+    <div class="main-container">
+        <section class="turtle-section">
+            <h2>거북이의 여행 🐢</h2>
+            
+            <div class="turtle_moveline-section"> <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
         </header>
 
-        <section class="todo-container"> <!-- 투두리스트 컨테이너 -->
-            <div class="todo-main-card">
-                <div class="input-section">
-                    <input type="checkbox" id="initial-status">
-                    <div class="input-wrapper">
-                        <input type="text" id="task-input" placeholder="할 일을 입력하세요">
-                        <button id="add-btn">추가</button>
-                    </div>
-                    <span id="progress-text-display">0%</span>
-                </div>
+
+        <section class="checklist-section">
+            <h3>오늘의 할 일</h3> 
+
+            <form action="/update_todo" method="POST" class="input-group">
+                <input type="text" name="todo_content" class="input-box" placeholder="오늘 할 일을 입력하세요!" required>
+                <button type="submit" class="add-btn">추가</button>
+            </form>
 
                 <ul id="task-list">
                     {% for task in tasks %} <!-- 현재 데이터 저장소에 있는 데이터를 for문으로 순회해서 가져오는 부분 -->
@@ -66,8 +60,8 @@
         </section>
     </div>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/turtle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/checklist.js') }}"></script>
+
 </body>
 </html>
