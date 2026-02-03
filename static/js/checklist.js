@@ -20,14 +20,17 @@ class ChecklistInteraction {
                 this.refreshProgress();
             }
             
-            // 명세: 할 일 추가 후 자동 스크롤
+            //todo - yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
             if (event.detail.requestConfig.verb === 'post' && event.detail.target.classList.contains('todo-list-container')) {
                 this.scrollToBottom();
             }
-        });
+        }); 
     }
 
-    // 2. 진행률 갱신 함수
+    //2. 진행률 갱신 함수
+    //todo - yj: 테스트 시나리오 1) 서버 터미널에서 체크박스 해제/체크하는 경우
+    //todo - yj: 테스트 시나리오 2) 할일을 추가해 달성률을 갱신하는 경우
+    //todo - yj: 두 테스트 시나리오에서 실시간으로 서버 터미널에 진행률 출력되는 것까지 확인했습니다. 거북이 섹션과는 연관 X
     async refreshProgress() {
         try {
             const res = await fetch('/api/tasks/progress');
@@ -64,7 +67,7 @@ class ChecklistInteraction {
         });
     }
 
-    // 명세: 리스트 하단으로 자동 스크롤
+    //todo - yj: 2월 3일 명세) 리스트 하단으로 자동 스크롤해주는 함수입니다.
     scrollToBottom() {
         const container = document.querySelector('.todo-list-container');
         if (container) {
