@@ -42,7 +42,10 @@
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
                     
                     <label class="checkbox-label">
-                        <input type="checkbox" class="real-checkbox" {% if task.is_done %}checked{% endif %}>
+                        <input type="checkbox" 
+                        class="real-checkbox" 
+                        data-id="{{ task.id }}" 
+                        {% if task.is_done %}checked{% endif %}>
                         <span class="checkmark"></span>
                     </label>
 
