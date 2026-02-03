@@ -34,7 +34,7 @@ class TurtleAnimation {
                 try {
                     // 1. 체크 상태를 서버에 저장 (새로고침 방지)
                     // 팀원의 API 구조에 따라 /toggle_todo/${taskId} 등으로 호출
-                    await fetch(`/toggle_todo/${taskId}`, { method: 'POST' });
+                    await fetch(`/toggle_todo/${taskId}`);
 
                     // 2. /api/progress를 호출하여 계산된 최신 진행률 가져오기 (B 작업 핵심)
                     const response = await fetch('/api/progress');
