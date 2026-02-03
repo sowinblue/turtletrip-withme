@@ -1,0 +1,12 @@
+<div class="edit-mode-container">
+    <input type="text" name="content" value="{{ task.content }}" class="edit-input" id="edit-input-{{ task.id }}">
+    <div class="edit-actions">
+        <button hx-patch="/api/tasks/{{ task.id }}/update" 
+                hx-include="#edit-input-{{ task.id }}"
+                hx-target="#task-{{ task.id }}" 
+                hx-swap="outerHTML">저장</button>
+        <button hx-get="/api/tasks/{{ task.id }}/view" 
+                hx-target="#task-{{ task.id }}" 
+                hx-swap="outerHTML">취소</button>
+    </div>
+</div>
