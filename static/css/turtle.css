@@ -1,0 +1,12 @@
+/* 거북이 부드럽게 움직이기 */
+.turtle-svg {
+    transition: transform 0.6s ease-out;
+}
+
+/* 상태바 부드럽게 차오르기 */
+.progress-fill {
+    width: 0%; /* 초기값 */
+    height: 100%;
+    background-color: #4caf50; /* 초록색 */
+    transition: width 0.6s ease-out;
+}
