@@ -1,4 +1,4 @@
-<!DOCTYPE html> <!-- ! 전체 사용할 메인 페이지 -->
+<!DOCTYPE html> <!-- 전체 사용할 메인 페이지 -->
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -13,19 +13,19 @@
 </head>
 <body>
     <div class="main-container"> <!-- 메인 컨테이너 -->
-        <header class="journey-box">
-            <div class="inner-ocean">
-                <div class="wave-bg"></div>
-                <div class="progress-bar-wrapper">
-                    <div id="horizontal-progress-fill"></div>
+        <header class="journey-box"><!-- 거북이 + 달성률 상태바 컨테이너 -->
+            <div class="inner-ocean"> <!-- 파도 박스 -->
+                <div class="wave-bg"></div> 
+                <div class="progress-bar-wrapper"> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
+                    <div id="horizontal-progress-fill"></div> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
                 </div>
-                <div id="turtle-group" class="turtle-container">
-                    <div class="turtle-char">🐢</div>
+                <div id="turtle-group" class="turtle-container"> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
+                    <div class="turtle-char">🐢</div> <!-- ! 상태바 부분(다른 분이 수정할 부분) -->
                 </div>
             </div>
         </header>
 
-        <section class="todo-container">
+        <section class="todo-container"> <!-- 투두리스트 컨테이너 -->
             <div class="todo-main-card">
                 <div class="input-section">
                     <input type="checkbox" id="initial-status">
@@ -37,14 +37,14 @@
                 </div>
 
                 <ul id="task-list">
-                    {% for task in tasks %}
+                    {% for task in tasks %} <!-- 현재 데이터 저장소에 있는 데이터를 for문으로 순회해서 가져오는 부분 -->
                     <li class="todo-item" id="task-{{ task.id }}">
                         <div class="item-main">
                             <input type="checkbox" 
                                 hx-patch="/api/tasks/{{ task.id }}/toggle" 
                                 hx-swap="none"
-                                {% if task.is_completed %}checked{% endif %}>
-                            <span class="task-text">{{ task.content }}</span>
+                                {% if task.is_completed %}checked{% endif %}> <!-- 체크박스 여부 출력 -->
+                            <span class="task-text">{{ task.content }}</span> <!-- 가져온 데이터의 내용 부분을 출력 -->
                         </div>
                         
                         <div class="more-menu">
@@ -52,11 +52,11 @@
                             <div class="menu-content">
                                 <button hx-get="/api/tasks/{{ task.id }}/edit" 
                                         hx-target="#task-{{ task.id }}" 
-                                        hx-swap="innerHTML">수정</button>
+                                        hx-swap="innerHTML">수정</button><!-- 수정할 할일의 고유 id -->
                                 <button hx-delete="/api/tasks/{{ task.id }}" 
                                         hx-confirm="정말 삭제할까요?"
                                         hx-target="#task-{{ task.id }}" 
-                                        hx-swap="outerHTML">삭제</button>
+                                        hx-swap="outerHTML">삭제</button><!-- 삭제할 할일의 고유 id -->
                             </div>
                         </div>
                     </li>
