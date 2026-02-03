@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurtleTrip</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="main-container">
+
         <section class="turtle-section">
-            <h2>거북이 경로</h2>
-            <div>달성률: {{ rate }}</div> <!-- 서버의 index 함수가 보내준 rate 값을 출력해주기 (rate=calculation_rate)-->
-        </section>
-        <section class="checklist-section">
-            <h2>체크리스트</h2>
+            <h2>거북이의 여행 🐢</h2>
             
-            <!-- 기존에 저장된 할 일 목록 표시 -->
-            <div class="saved-tasks">
-                {% for task in tasks %} <!-- 메인(index) 함수에서 리턴해준 내부 데이터 전체를 불러오기. tasks=data['tasks'] -->
-                <div class="todo-item saved"> 
-                    <input type="checkbox" {% if task.is_done %}checked{% endif %} disabled>
-                    <span class="task-content {% if task.is_done %}done{% endif %}">{{ task.content }}</span> <!-- 불러온 내부 데이터의 content 가져와서 출력해주기 (task.content)-->
+            <div class="turtle_moveline-section"> <div class="turtle_img" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
-                {% endfor %}
             </div>
-            
-            <!-- 새로운 할 일 추가 폼 -->
-            <form action="/update_todo" method="POST" class="todo-form">
-                <div class="todo-item">
-                    <input type="checkbox" name="is_done" value="done">
-                    <input type="text" name="todo_content" placeholder="오늘 할 일을 입력하세요!">
-                    <button type="submit">저장</button>
+
+            <div class="progress-container">
+                <div class="progress-track">
+                    <div id="turtle-progress-bar" class="progress-fill" style="width: {{ rate }}%;">
+                        <span class="progress-text">{{ rate }}%</span>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="checklist-section">
+            <h3>오늘의 할 일</h3>
+
+            <form action="/update_todo" method="POST" class="input-group">
+                <input type="text" name="todo_content" class="input-box" placeholder="오늘 할 일을 입력하세요!" required>
+                <button type="submit" class="add-btn">추가</button>
             </form>
+
+            <div class="todo-list-container">
+                
+                {% for task in tasks %}
+                
+                <div class="todo-item {{ 'completed' if task.is_done else '' }}">
+                    
+                    <label class="checkbox-label" onclick="location.href='/toggle_todo/{{ task.id }}'">
+                        <input type="checkbox" class="real-checkbox" {% if task.is_done %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <span class="todo-text">{{ task.content }}</span>
+                    
+                    <button class="delete-btn" onclick="location.href='/delete_todo/{{ task.id }}'">삭제</button>
+                </div>
+                
+                {% endfor %}
+
+            </div>
         </section>
     </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
