@@ -107,25 +107,22 @@ def delete_todo(task_id):
     save_tasks(data)
     return redirect(url_for('index'))
 
-# --- [API] 프론트엔드 연동용: 진행률 조회 ---
 @app.route('/api/progress')
-def api_get_progress():
-    """
-    프론트엔드(JavaScript)에서 fetch(AJAX)로 호출하는 API
+def get_progress():
+"""
+프론트엔드(JavaScript)에서 fetch로 호출하는 API
+반환 형식:
+    { "rate": 50 }
 
-    반환 예시:
-        { "rate": 50 }
+turtle.js에서 이 값을 받아 거북이 위치를 업데이트합니다.
+"""
+data = get_user_progress()
+tasks = data.get('tasks', [])
 
-    turtle.js에서 이 값을 받아
-    거북이 위치 및 프로그레스 바를 업데이트합니다.
-    """
-    data = get_user_progress()
-    tasks = data.get('tasks', [])
+# 진행률 계산은 모듈에 위임
+rate = calculator.calculate_completion_rate(tasks)
 
-    # 진행률 계산은 모듈에 위임
-    rate = calculator.calculate_completion_rate(tasks)
-
-    return jsonify({"rate": rate})
+return jsonify({"rate": rate})
 
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':

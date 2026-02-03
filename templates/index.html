@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurtleTrip</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/turtle.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -13,7 +14,7 @@
         <section class="turtle-section">
             <h2>거북이의 여행 🐢</h2>
             
-            <div class="turtle_moveline-section"> <div class="turtle_img" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle_idle.svg') }}" alt="거북이 대기" width="90">
+            <div class="turtle_moveline-section"> <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
 
@@ -40,8 +41,11 @@
                 
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
                     
-                    <label class="checkbox-label" onclick="location.href='/toggle_todo/{{ task.id }}'">
-                        <input type="checkbox" class="real-checkbox" {% if task.is_done %}checked{% endif %}>
+                    <label class="checkbox-label">
+                        <input type="checkbox" 
+                        class="real-checkbox" 
+                        data-id="{{ task.id }}" 
+                        {% if task.is_done %}checked{% endif %}>
                         <span class="checkmark"></span>
                     </label>
 
@@ -57,5 +61,6 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/turtle.js') }}" defer></script>
 </body>
 </html>
