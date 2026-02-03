@@ -1,8 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import json
 import uuid # 고유 ID 생성을 위해 사용
+# 진행률 계산 로직 분리를 위한 모듈 import
+# (기존 calculate_completion_rate 함수 제거 후 모듈 사용)
+from modules.progress_calculator import ProgressCalculator
 
 app = Flask(__name__)
+
+# ProgressCalculator 인스턴스 생성
+calculator = ProgressCalculator()
+
 
 # tasks.json 파일을 읽어오는 함수
 def get_user_progress():
@@ -24,34 +31,9 @@ def save_tasks(data):
         # indent=4를 주면 파일이 예쁘게 정렬됨.
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-# user1의 달성률 계산 메서드
-def calculate_completion_rate():
-    """
-    할 일 달성률을 계산하는 함수
-    
-    Returns:
-        달성률 (0~100 사이의 정수)
-    """
-    data = get_user_progress() # 저장된 모든 데이터 가져오기
-    
-    # 데이터가 없을 경우 에러 방지
-    tasks = data.get('tasks', [])
-    if not tasks:
-        return 0
-
-    is_done_list = [task.get('is_done') for task in tasks] # is_done 값만 뽑아오기
-
-    count = 0
-    for completed in is_done_list:
-        if completed == True:
-            count += 1
-            
-    # (완료된 개수 / 전체 개수) * 100
-    completion_rate = count / len(is_done_list) * 100
-    print(f'현재 달성률: {completion_rate}%')
-    
-    return int(completion_rate) # 소수점 없이 정수로 반환
-
+# User1의달성률 계산 메서드
+# → 진행률 계산 책임을 modules/progress_calculator.py 로 이동
+# → app.py에는 계산 로직을 두지 않기로 팀 개발계획에서 합의됨
 
 # 메인페이지("/") 접속시 실행되는 함수
 @app.route('/')
@@ -62,10 +44,14 @@ def index():
     # 데이터가 잘 읽혔는지 터미널에서 확인하기
     print("현재 tasks.json 데이터:", data)
 
-    calculation_rate = calculate_completion_rate()
-    
+    # 기존 calculate_completion_rate() 대신
+    # ProgressCalculator 모듈을 사용하여 진행률 계산
+    tasks = data.get('tasks', [])
+    calculation_rate = calculator.calculate_completion_rate(tasks)
+
     # index.html 파일을 화면에 보여줌 (tasks 데이터를 함께 전달)
-    return render_template("index.html", tasks=data['tasks'], rate=calculation_rate)
+    return render_template("index.html", tasks=tasks, rate=calculation_rate)
+
 
 # 사용자가 보낸 데이터를 받기 (할 일 추가)
 @app.route('/update_todo', methods=['POST'])
@@ -100,6 +86,7 @@ def update_todo():
     # 저장 후 다시 메인 화면으로 돌아가기
     return redirect(url_for('index'))
 
+
 # 체크박스 상태 토글 (완료/미완료 변경)
 @app.route('/toggle_todo/<task_id>')
 def toggle_todo(task_id):
@@ -111,6 +98,7 @@ def toggle_todo(task_id):
     save_tasks(data)
     return redirect(url_for('index'))
 
+
 # 할 일 삭제
 @app.route('/delete_todo/<task_id>')
 def delete_todo(task_id):
@@ -120,11 +108,21 @@ def delete_todo(task_id):
     return redirect(url_for('index'))
 
 @app.route('/api/progress')
-def get_progress_api():
-    # 이미 만들어두신 계산 함수를 호출합니다.
-    rate = calculate_completion_rate()
-    # 자바스크립트가 읽을 수 있도록 JSON 형식으로 반환합니다.
-    return {"progress": rate}
+def get_progress():
+"""
+프론트엔드(JavaScript)에서 fetch로 호출하는 API
+반환 형식:
+    { "rate": 50 }
+
+turtle.js에서 이 값을 받아 거북이 위치를 업데이트합니다.
+"""
+data = get_user_progress()
+tasks = data.get('tasks', [])
+
+# 진행률 계산은 모듈에 위임
+rate = calculator.calculate_completion_rate(tasks)
+
+return jsonify({"rate": rate})
 
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
