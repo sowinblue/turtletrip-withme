@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
+import os
 
 app = Flask(__name__) #__name__으로 내 위치를 알려(코드가 실행되는 위치) Flask 를 사용
 
@@ -10,23 +11,32 @@ class DataManager:
 
     #* 1. JSON 파일 읽기 - 파일 있으면 반환 없으면 {"tasks": []}
     def get_user_progress(self):
+        # 파일이 아예 존재하지 않는 경우를 먼저 체크한다.
+        if not os.path.exists(self.file_path):
+            return {"tasks": [], "rate": 0}
         try: #* 일단 하고싶은거 해라
-            with open(self.file_path, 'r', encoding='utf-8') as f: # with 블록이 끝나면 f(통로)도 사라짐
-            # 파일 열고(읽을 파일명, 모드(읽기), 글자 형식_안 깨지게(utf-8))
-            # f를 꼽으면 연 파일을 '찾을 때' 어딨는지 알려주고, 데이터를 꺼내올 수 있게 도와줌(통로임)
-                return json.load(f)
-                # f(통로)로 내용을 예쁘게 가져옴(json안에 있는 도구인 load로)
-                #read(읽기)+decode(변환) == load(읽고 변환해서 {} & []에 넣어줌) 같은 느낌
+            with open(self.file_path, 'r', encoding='utf-8') as f:
+                # json.load(f)를 시도한다.
+                data = json.load(f)
+                
+                # 데이터가 만약 비어있거나 리스트 형태가 아니면 기본 구조를 잡아준다.
+                if not data:
+                    return {"tasks": [], "rate": 0}
+                return data
 
-        except FileNotFoundError: #* 파일이 없으면 딱 잡아냄. "어어 너 파일 없네??"
-            return {"tasks": []} # 반환
+        except (json.JSONDecodeError, ValueError):
+            # 🔹 [핵심] JSON 파일이 깨졌을 때 발생하는 에러를 잡아낸다.
+            # 파일은 있지만 내용이 꼬였을 경우(Extra data 등), 
+            # 에러를 뿜지 않고 빈 데이터를 반환하여 앱이 죽지 않게 책임진다.
+            print(f"경고: {self.file_path} 파일이 손상되었습니다. 초기화합니다.")
+            return {"tasks": [], "rate": 0}
+
 
     #* 2. JSON 파일 데이터저장
     def save_tasks(self, data): # data(JSON에 쓸 내용) 입력 받기
         
         with open(self.file_path, 'w', encoding='utf-8') as f:
         # tasks.json 파일 열어서 write 모드로 - w 모드는 기존 내용 전부 삭제 후 다시 씀.
-
             json.dump(data, f, ensure_ascii=False, indent=4)
             # 입력한'data'를 JSON 문자열로 바꿔서 JSON 파일에 저장(던짐)
             # ensure_ascii=False를 써야 한글이 깨지지 않고 저장됨.
