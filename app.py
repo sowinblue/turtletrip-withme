@@ -72,12 +72,51 @@ def toggle_todo(task_id):
     return redirect(url_for('index'))
 
 # 할 일 삭제
-@app.route('/delete_todo/<task_id>')
+@app.route('/delete_todo/<task_id>',methods=['POST'])
 def delete_todo(task_id):
     data = dm.get_user_progress()
     data['tasks'] = [t for t in data['tasks'] if t['id'] != task_id]
     dm.save_tasks(data)
     return redirect(url_for('index'))
+
+
+
+# 할 일 수정 로직 (POST 방식)
+@app.route('/edit_todo/<task_id>', methods=['POST'])
+def edit_todo(task_id):
+    # 1. 수정된 내용 가져오기
+    new_content = request.form.get('content')
+    
+    # 2. 빈 값 검사 (유효성 검사기 활용)
+    if not tv.is_valid(new_content):
+        # 만약 비어있다면 수정하지 않고 메인으로 돌아가거나 에러 처리
+        return redirect(url_for('index'))
+
+    # 3. 데이터 업데이트 호출
+    dm.update_task(task_id, new_content)
+    
+    print(f"ID {task_id}의 내용이 '{new_content}'로 수정되었습니다.")
+    
+    # 4. 수정 완료 후 메인 페이지로 이동
+    return redirect(url_for('index'))
+
+
+# 수정 페이지를 보여주는 역할 (GET)
+@app.route('/edit_todo/<task_id>', methods=['GET'])
+def edit_page(task_id):
+    # 1. 기존 데이터 가져오기
+    data = dm.get_user_progress()
+    
+    # 2. 리스트에서 수정하려는 task 찾기
+    task = next((t for t in data['tasks'] if t['id'] == task_id), None)
+    
+    # 3. 만약 해당 id의 task가 없으면 메인으로 튕겨내기
+    if task is None:
+        return redirect(url_for('index'))
+    
+    # 4. 찾은 task 데이터를 edit.html에 전달하며 페이지 띄우기
+    return render_template("edit.html", task=task)
+
 
 @app.route('/api/progress')
 def get_progress():
