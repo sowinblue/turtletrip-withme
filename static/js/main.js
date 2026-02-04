@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function handleTodoToggle(checkbox, todoItem) {
 
     // 현재 체크 상태(true = 완료, false = 미완료)
-    const isCompleted = checkbox.checked;
+    const is_done = checkbox.checked;
 
     // data-id 속성에 저장된 할 일 고유 ID
     // 서버에서 어떤 할 일인지 식별하는 용도
@@ -70,13 +70,13 @@ function handleTodoToggle(checkbox, todoItem) {
     // [Step 0] 즉각적인 UI 반영
     // 서버 응답을 기다리지 않고 바로 시각적 반응 제공
     // → 사용자 체감 속도 향상
-    todoItem.classList.toggle('completed', isCompleted);
+    todoItem.classList.toggle('completed', is_done);
 
     // [Step 1] 서버에 체크 상태 변경 요청
     fetch(`/toggle_todo/${todoId}`, {
         method: 'POST', // 상태 변경이므로 POST
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ completed: isCompleted }) // 변경된 상태 전달
+        body: JSON.stringify({ completed: is_done }) // 변경된 상태 전달
     })
     .then(response => {
         // 서버 통신 실패 시 이후 흐름 중단
@@ -107,8 +107,8 @@ function handleTodoToggle(checkbox, todoItem) {
 
         // 🔹 실패 시 UI 상태 복구
         // optimistic UI 패턴에 대한 책임 처리
-        checkbox.checked = !isCompleted;
-        todoItem.classList.toggle('completed', !isCompleted);
+        checkbox.checked = !is_done;
+        todoItem.classList.toggle('completed', !is_done);
     });
 }
 
