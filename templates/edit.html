@@ -1,12 +1,20 @@
-<div class="edit-mode-container">
-    <input type="text" name="content" value="{{ task.content }}" class="edit-input" id="edit-input-{{ task.id }}">
-    <div class="edit-actions">
-        <button hx-patch="/api/tasks/{{ task.id }}/update" 
-                hx-include="#edit-input-{{ task.id }}"
-                hx-target="#task-{{ task.id }}" 
-                hx-swap="outerHTML">저장</button>
-        <button hx-get="/api/tasks/{{ task.id }}/view" 
-                hx-target="#task-{{ task.id }}" 
-                hx-swap="outerHTML">취소</button>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>할 일 수정</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}">
+</head>
+<body class="main-container" style="justify-content: center; align-items: center;">
+    <section class="checklist-section" style="width: 100%; max-width: 500px; flex: none;">
+        <h3>할 일 수정</h3>
+        <form action="/edit_todo/{{ task.id }}" method="POST">
+            <input type="text" name="content" class="input-box" value="{{ task.content }}" required style="width: 100%; margin-bottom: 20px;">
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="add-btn" style="flex: 1;">저장</button>
+                <a href="/" style="flex: 1; text-align: center; text-decoration: none; background: #eee; color: #333; padding: 10px; border-radius: 8px;">취소</a>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

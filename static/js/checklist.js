@@ -1,21 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. HTMX 이벤트 리스너: 서버 작업이 성공하면 진행률 갱신
-    document.body.addEventListener('htmx:afterOnLoad', (event) => {
-        // 수정, 삭제, 체크박스 변경 후 진행률을 다시 계산해야 함
-        if (event.detail.target.id.includes('task-') || event.detail.xhr.status === 200) {
-            refreshProgress();
-        }
-    });
+class ChecklistInteraction {
+    constructor() {
+        this.init();
+    }
 
-    // 2. 진행률 갱신 함수 (progress_calculator.py의 결과값을 받아오는 API 호출)
-    async function refreshProgress() {
-        const res = await fetch('/api/tasks/progress');
-        const data = await res.json();
-        // turtle.js에 정의된 함수를 호출하거나 직접 업데이트
-        if (window.updateProgress) {
-            window.updateProgress(data.percent);
+    init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.setupEventListeners();
+            this.setupOutsideClick();
+        });
+        
+        // 전역에서 호출할 수 있도록 바인딩 (toggleMenu용)
+        window.toggleMenu = (menuId) => this.toggleMenu(menuId);
+    }
+
+    setupEventListeners() {
+        // 1. HTMX 이벤트 리스너 (서버 작업 후 갱신)
+        document.body.addEventListener('htmx:afterOnLoad', (event) => {
+            if (event.detail.target.id.includes('task-') || event.detail.xhr.status === 200) {
+                this.refreshProgress();
+            }
+            
+            //todo - yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
+            if (event.detail.requestConfig.verb === 'post' && event.detail.target.classList.contains('todo-list-container')) {
+                this.scrollToBottom();
+            }
+        }); 
+    }
+
+    //2. 진행률 갱신 함수
+    //todo - yj: 테스트 시나리오 1) 서버 터미널에서 체크박스 해제/체크하는 경우
+    //todo - yj: 테스트 시나리오 2) 할일을 추가해 달성률을 갱신하는 경우
+    //todo - yj: 두 테스트 시나리오에서 실시간으로 서버 터미널에 진행률 출력되는 것까지 확인했습니다. 거북이 섹션과는 연관 X
+    async refreshProgress() {
+        try {
+            const res = await fetch('/api/tasks/progress');
+            const data = await res.json();
+            if (window.updateProgress) {
+                window.updateProgress(data.percent);
+            }
+        } catch (error) {
+            console.error("Progress update failed:", error);
         }
     }
-});
 
-// 더보기 메뉴 밖을 클릭하면 닫히게 하는 등의 보조 로직 추가 가능
+    // 3. 더보기 메뉴 토글
+    toggleMenu(menuId) {
+        document.querySelectorAll('.todo-menu').forEach(menu => {
+            if (menu.id !== menuId) menu.style.display = 'none';
+        });
+
+        const targetMenu = document.getElementById(menuId);
+        if (targetMenu) {
+            const isHidden = targetMenu.style.display === 'none' || targetMenu.style.display === '';
+            targetMenu.style.display = isHidden ? 'flex' : 'none';
+        }
+    }
+
+    // 4. 외부 클릭 시 닫기
+    setupOutsideClick() {
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.more-menu-wrapper')) {
+                document.querySelectorAll('.todo-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+            }
+        });
+    }
+
+    //todo - yj: 2월 3일 명세) 리스트 하단으로 자동 스크롤해주는 함수입니다.
+    scrollToBottom() {
+        const container = document.querySelector('.todo-list-container');
+        if (container) {
+            container.scrollTo({
+                top: container.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    }
+}
+
+// 클래스 인스턴스 생성
+new ChecklistInteraction();
