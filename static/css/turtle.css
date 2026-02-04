@@ -1,3 +1,7 @@
+/* ============================================
+    1. 기본 애니메이션 설정
+    ============================================ */
+
 /* 거북이 부드럽게 움직이기 */
 .turtle-svg {
     transition: transform 0.6s ease-out;
@@ -15,11 +19,24 @@
     transition: width 0.6s ease-out;
 }
 
+/* ============================================
+    2. 거북이 컨테이너 설정
+    ============================================ */
+
 /* 1. 거북이를 감싸는 박스 설정 */
 .turtle_container {
-    position: absolute;  /* 🌟 필수: 이게 없으면 left 명령을 무시합니다 */
-    left: 0;             /* 초기 위치 */
+    position: absolute; /* 🌟 필수: 이게 없으면 left 명령을 무시합니다 */
+    bottom: 0; /* 🌟 하단에 고정 (style.css와 동기화) */
+    left: 0; /* 초기 위치 */
     transition: left 0.6s ease-out; /* 🐢 거북이가 부드럽게 기어가는 효과 */
+    
+    transform: translateX(-50%);
+}
+
+/* 점프 애니메이션 시 translateX 유지하면서 점프 효과 적용 */
+.turtle_container .turtle.jump-animation {
+    /* 이미 컨테이너에 translateX가 적용되어 있으므로
+    거북이 이미지 자체에는 Y축 이동만 적용 */
 }
 
 /* 2. 거북이 이미지는 부모 박스(container)를 따라가므로 기본 설정만 유지 */
@@ -27,12 +44,14 @@
     display: block;
 }
 
-/* 3. 거북이가 기어가는 길 (부모 요소) */
+/* 거북이가 기어가는 길 (부모 요소) */
 .turtle_moveline-section {
-    position: relative;  /* 🌟 필수: 거북이 위치의 기준점이 됩니다 */
-    width: 100%;
-    height: 100px;       /* 거북이 키에 맞춰 적절히 조절 */
-    overflow: hidden;    /* 거북이가 100% 넘어가서 삐져나가지 않게 */
+position: relative; /* 🌟 필수: 거북이 위치의 기준점이 됩니다 */
+width: 100%;
+height: 100px; /* 거북이 키에 맞춰 적절히 조절 */
+overflow: visible; /* 🎯 변경: 거북이가 삐져나가도 보이게 (잘림 방지) */
+padding: 0 30px; /* 🎯 거북이 너비(90px) ÷ 2 = 45px */
+box-sizing: border-box;
 }
 
 /* ============================================
