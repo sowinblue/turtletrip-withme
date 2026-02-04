@@ -1,3 +1,7 @@
+/* ============================================
+    1. 기본 애니메이션 설정
+    ============================================ */
+
 /* 거북이 부드럽게 움직이기 */
 .turtle-svg {
     transition: transform 0.6s ease-out;
@@ -8,15 +12,31 @@
     width: 0%; /* 초기값 */
     height: 100%;
     background-color: #4caf50; /* 초록색 */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /*글짜 오른쪽 정렬 */
     transition: width 0.6s ease-out;
 }
 
+/* ============================================
+    2. 거북이 컨테이너 설정
+    ============================================ */
 
 /* 1. 거북이를 감싸는 박스 설정 */
 .turtle_container {
-    position: absolute;  /* 🌟 필수: 이게 없으면 left 명령을 무시합니다 */
-    left: 0;             /* 초기 위치 */
+    position: absolute; /* 🌟 필수: 이게 없으면 left 명령을 무시합니다 */
+    bottom: 0; /* 🌟 하단에 고정 (style.css와 동기화) */
+    left: 0; /* 초기 위치 */
     transition: left 0.6s ease-out; /* 🐢 거북이가 부드럽게 기어가는 효과 */
+    
+    transform: translateX(-50%);
+}
+
+/* 점프 애니메이션 시 translateX 유지하면서 점프 효과 적용 */
+.turtle_container .turtle.jump-animation {
+    /* 이미 컨테이너에 translateX가 적용되어 있으므로
+    거북이 이미지 자체에는 Y축 이동만 적용 */
 }
 
 /* 2. 거북이 이미지는 부모 박스(container)를 따라가므로 기본 설정만 유지 */
@@ -24,10 +44,86 @@
     display: block;
 }
 
-/* 3. 거북이가 기어가는 길 (부모 요소) */
+/* 거북이가 기어가는 길 (부모 요소) */
 .turtle_moveline-section {
-    position: relative;  /* 🌟 필수: 거북이 위치의 기준점이 됩니다 */
-    width: 100%;
-    height: 100px;       /* 거북이 키에 맞춰 적절히 조절 */
-    overflow: hidden;    /* 거북이가 100% 넘어가서 삐져나가지 않게 */
+position: relative; /* 🌟 필수: 거북이 위치의 기준점이 됩니다 */
+width: 100%;
+height: 100px; /* 거북이 키에 맞춰 적절히 조절 */
+overflow: visible; /* 🎯 변경: 거북이가 삐져나가도 보이게 (잘림 방지) */
+padding: 0 45px; /* 🎯 거북이 너비(90px) ÷ 2 = 45px */
+box-sizing: border-box;
+}
+
+/* ============================================
+   3. 점프 애니메이션 (1~2시간 작업)
+   ============================================ */
+
+/* 점프 키프레임 정의 */
+@keyframes turtle-jump {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    30% {
+        transform: translateY(-25px) rotate(-5deg); /* 위로 점프 */
+    }
+    50% {
+        transform: translateY(-35px) rotate(0deg); /* 최고점 */
+    }
+    70% {
+        transform: translateY(-25px) rotate(5deg); /* 내려오는 중 */
+    }
+    100% {
+        transform: translateY(0) rotate(0deg); /* 착지 */
+    }
+}
+
+/* 점프 애니메이션 클래스 */
+.jump-animation {
+    animation: turtle-jump 0.6s ease-in-out;
+}
+
+/* ============================================
+   4. 100% 완주 연출 (2~3시간 작업)
+   ============================================ */
+
+/* 완주 시 거북이 반짝임 효과 */
+@keyframes celebration-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1));
+    }
+}
+
+.turtle-celebration {
+    animation: celebration-glow 1s ease-in-out infinite;
+}
+
+/* 완주 축하 텍스트 */
+.celebration-text {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #4caf50;
+    opacity: 0;
+    animation: celebration-text-appear 2s ease-out forwards;
+}
+
+@keyframes celebration-text-appear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
 }
