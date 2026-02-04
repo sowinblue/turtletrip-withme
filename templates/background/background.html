@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+</head>
+
+<body>
+    <div class="viewport"> <!--화면창틀_사용자 눈에 보이는 화면 크기의 틀-->
+        <div id="target"> <!--실제 이미지를 일렬로 붙여둠_배경이 이동하는 효과-->
+            <div class="layer"></div> <!--사진 1-->
+            <div class="layer"></div> <!--사진 2-->
+            <div class="layer"></div> <!--사진 3-->
+        </div>
+    </div>
+
+    <script id="data-bridge"></script>
+    <script>
+        const target = document.getElementById('target');
+        function updateEnv(p, o, b, h) {
+            document.documentElement.style.setProperty('--brightness', b);
+            document.documentElement.style.setProperty('--hue', h + 'deg');
+            const moveX = (p / 100) * (window.innerWidth * 2);
+            target.style.transform = `translateX(${-moveX}px)`;
+        }
+
+        setInterval(() => {
+            const old = document.getElementById('data-bridge');
+            const nw = document.createElement('script');
+            nw.id = 'data-bridge';
+            nw.src = "{{ url_for('static', filename='data.js') }}?v=" + Date.now();
+            old.parentNode.replaceChild(nw, old);
+        }, 500);
+    </script>
+</body>
+
+</html>
