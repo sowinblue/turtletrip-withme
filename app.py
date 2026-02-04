@@ -72,7 +72,7 @@ def toggle_todo(task_id):
     return redirect(url_for('index'))
 
 # 할 일 삭제
-@app.route('/delete_todo/<task_id>')
+@app.route('/delete_todo/<task_id>',methods=['POST'])
 def delete_todo(task_id):
     data = dm.get_user_progress()
     data['tasks'] = [t for t in data['tasks'] if t['id'] != task_id]
