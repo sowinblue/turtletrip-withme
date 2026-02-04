@@ -23,7 +23,7 @@ class TurtleAnimation {
 
         if (this.turtleContainer && this.progressBar) {
             console.log("✅ 모든 요소 준비 완료! 이제 명령을 기다립니다.");
-        }
+        } 
     }
 
     // ============================================
