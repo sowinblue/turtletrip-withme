@@ -1,36 +1,219 @@
+
+/*todo - yj: 현재 css에서 담당하는 스크롤바 기능이 구현되지 않았습니다.
+    스크롤바 기능이 구현되려면 style.css의 메인 컨테이너 높이, overflow: hidden; 부분등을 건드려야 합니다. */
+
+
 /* 더보기 메뉴 스타일 */
-.more-menu {
+.more-menu-wrapper {
     position: relative;
     display: inline-block;
+    margin-left: 10px;
 }
 
-.menu-btn {
-    background: none; border: none; font-size: 20px; cursor: pointer; padding: 0 5px;
+/* 3. 명세서 기반: 수정 버튼 스타일 */
+.edit-link {
+    color: #3296e8; /* 파란색 계열 */
+    text-decoration: none;
+    font-size: 13px;
+}
+.edit-link:hover {
+    text-decoration: underline; /* 호버 시 밑줄 */
+}
+/* 할 일 삭제 버튼 */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
 }
 
-.menu-content {
-    display: none; /* 기본 숨김 */
-    position: absolute; right: 0; background: white;
-    border: 1px solid black; border-radius: 4px; z-index: 20;
-    min-width: 60px;
+/* 할 일 텍스트 영역 */
+.todo-text {
+    flex: 1;
+    font-size: 16px;
+    color: var(--text-color);
 }
 
-/* 메뉴 버튼에 마우스 올리거나 클릭 시 표시 (JS/CSS 조합) */
-.more-menu:hover .menu-content {
+/* 완료된 항목 (.completed 클래스가 붙으면 흐리게) 체크박스 체크된 항목의 스타일 배정 */
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #ccc;
+}
+.todo-item.completed .checkmark {
+    background-color: var(--primary-color);
+}
+
+/* 하단 : 체크리스트 영역 65%비중 */
+.checklist-section {
+    flex: 0.65;
+    background-color: var(--checklist-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.checklist-section h3 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    border-left: 5px solid var(--turtle-bg-bot);
+    padding-left: 10px;
+}
+
+/* 입력창과 추가 버튼을 한 줄로 묶는 영역 */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* 할 일 입력 텍스트 박스 스타일 */
+.input-box {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* 할 일 추가 버튼 */
+.add-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*할 일 목록 컨테이너 */
+.todo-list-container {
+    /* 1. 높이를 확실하게 고정 (테스트를 위해 300px로 해보세요) */
+    height: 350px !important; 
+    
+    /* 2. 내용이 넘칠 때만 스크롤바를 표시 */
+    overflow-y: auto !important;
+    
+    /* 3. 스크롤바가 생겨도 내용이 가려지지 않게 여백 확보 */
+    padding-right: 10px;
+    
+    /* 4. 부모 flex 영향을 무시하고 독립적인 높이 유지 */
+    display: block !important;
+}
+/* 스크롤바 이쁘게 */
+/*todo: 스크롤바 자체의 존재감을 키우기 (안 보일 수 있으니) 스크롤바 기능 부분 */
+.todo-list-container::-webkit-scrollbar {
+    width: 8px; /* 너비를 조금 더 넓게 */
+    display: block; /* 강제 표시 */
+}
+.todo-list-container::-webkit-scrollbar-thumb {
+    background-color: #bbbbbb; /* 색상을 좀 더 진하게 */
+    border-radius: 10px;
+}
+
+/* 개별 할 일 한 줄 레이아웃 */
+/* 1. 컨테이너를 뚫고 나가는 현상 방지 */
+.todo-item {
+    position: relative; /* 자식인 .todo-menu의 기준점이 됨 */
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* 2. 메뉴가 리스트를 밀어내지 않고 위에 뜨게 설정 */
+.todo-menu {
+    position: absolute;
+    right: 30px; /* 점 세 개 버튼 옆에 위치 */
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: none; /* JS에서 제어 */
+    flex-direction: row; /* 수정/삭제 가로 배치 */
+    gap: 10px;
+    padding: 8px;
+}
+.todo-item:hover {
+    background-color: #fafafa;
+}
+
+/* 체크박스 크기 및 클릭 영역 설정 */
+.checkbox-label {
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+}
+.real-checkbox {
+    opacity: 0; /* 진짜 체크박스는 숨김 */
+    cursor: pointer;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.checkbox-label input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.checkbox-label input:checked ~ .checkmark:after {
     display: block;
 }
 
+
+
+/* ================현재 안 쓰이는 것들================= */
+/* .more-menu {
+    position: relative;
+    display: inline-block;
+}
+.menu-btn {
+    background: none; border: none; font-size: 20px; cursor: pointer; padding: 0 5px;
+}
+.menu-content {
+    display: none; /* 기본 숨김 
+    position: absolute; right: 0; background: white;
+    border: 1px solid black; border-radius: 4px; z-index: 20;
+    min-width: 60px;
+} 
+.more-menu:hover .menu-content {
+    display: block;
+}
 .menu-content button {
     display: block; width: 100%; padding: 5px 10px;
     border: none; background: none; text-align: left; cursor: pointer;
 }
+.menu-content button:hover { background: #f0f0f0; }*/
 
-.menu-content button:hover { background: #f0f0f0; }
-
-/* 수정 모드 스타일 */
+/*? 당장은 필요 없는 것들 */
+/* 수정 모드 스타일: 할일 수정 방식을 어떻게 할거냐에 따라 쓰일수도 안 쓰일 수도 있는 부분 */
 .edit-mode-container {
     display: flex; gap: 5px; width: 100%;
 }
 .edit-input {
     flex: 1; border: 1px solid var(--status-blue); border-radius: 4px; padding: 4px;
 }
+
+
