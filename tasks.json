@@ -3,11 +3,21 @@
         {
             "id": "ff38f236",
             "content": "ㅇ",
-            "is_done": false
+            "is_done": true
         },
         {
             "id": "3346857d",
             "content": "d",
+            "is_done": false
+        },
+        {
+            "id": "c8dcff5a",
+            "content": "안녕",
+            "is_done": false
+        },
+        {
+            "id": "b5ba20df",
+            "content": "ㅏ안녕",
             "is_done": false
         }
     ]
