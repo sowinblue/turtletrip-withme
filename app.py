@@ -61,7 +61,7 @@ def update_todo():
     return redirect(url_for('index'))
 
 # 체크박스 상태 토글 (완료/미완료 변경)
-@app.route('/toggle_todo/<task_id>')
+@app.route('/toggle_todo/<task_id>', method=['POST', 'GET'])
 def toggle_todo(task_id):
     data = dm.get_user_progress()
     for task in data['tasks']:
@@ -69,7 +69,8 @@ def toggle_todo(task_id):
             task['is_done'] = not task['is_done'] # 상태 뒤집기
             break
     dm.save_tasks(data)
-    return redirect(url_for('index'))
+    # 성공했다는 신호만 보냄
+    return jsonify({"status": "success", "task_id": task_id})
 
 # 할 일 삭제
 @app.route('/delete_todo/<task_id>')
