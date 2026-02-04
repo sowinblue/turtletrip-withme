@@ -1,35 +1,3 @@
-
-# class SeaController:
-#     def __init__(self):
-#         self.DATA_FILE = "data.js"
-        
-#     def calculate_and_push(self, progress): #sb_24 사용
-#         # 100일 때 원본 복귀
-#         brightness = round(0.2 + (progress / 100) * 0.8, 2)  #밝기(0_어두움 -> 100_밝음)
-#         hue = int((100 - progress) * 2)  #색조(달성률이 올라갈수록 원래 이미지 색으로 돌아옴)
-        
-#         # 속도 조절: 0%일 때 60초(매우 느림) -> 100%일 때 30초(적당히 빠름)
-#         # 이 값을 키울수록 전체적으로 더 느려집니다.
-#         offset = -progress         
-#         js_code = f"updateEnv({progress},{offset}, {brightness}, {hue});"
-#         with open(self.DATA_FILE, "w", encoding="utf-8") as f:
-#             f.write(js_code)
-#         print(f"-> [전달] {progress}% | B:{brightness} | H:{hue} | Offset:{offset}%")
-
-# if __name__ == "__main__":
-#     c = SeaController()
-#     while True:
-#         try:
-#             val = input("달성률 입력 (0-100): ")
-#             if val.lower() == 'q': break
-#             c.calculate_and_push(int(val))
-#         except: pass
-
-
-
-#         def calculate_and_push(self, progress):
-#     # progress(0~100)를 배경 이동 거리(0% ~ -100%)로 변환
-
 import os
 
 class SeaController:
