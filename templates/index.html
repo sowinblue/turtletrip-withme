@@ -55,7 +55,7 @@
                     <button type="button" onclick="toggleMenu('menu-{{ task.id }}')" style="background:none; border:none; cursor:pointer;">⋮</button>
                     
                     <div id="menu-{{ task.id }}" class="todo-menu" style="display: none; background: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                        <a href="htmx를 통해 edit.html 내용으로 바꿔주는 일종의 링크 연결" style="font-size: 12px; margin-right: 5px;">수정</a>
+                        <a href="/edit_todo/{{ task.id }}" style="font-size: 12px; margin-right: 5px;">수정</a>
                         <form action="/delete_todo/{{ task.id }}" method="POST" style="display: inline;">
                             <button type="submit" class="delete-btn">삭제</button>
                         </form>
