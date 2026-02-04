@@ -62,3 +62,49 @@
 .jump-animation {
     animation: turtle-jump 0.6s ease-in-out;
 }
+
+/* ============================================
+   4. 100% 완주 연출 (2~3시간 작업)
+   ============================================ */
+
+/* 완주 시 거북이 반짝임 효과 */
+@keyframes celebration-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1));
+    }
+}
+
+.turtle-celebration {
+    animation: celebration-glow 1s ease-in-out infinite;
+}
+
+/* 완주 축하 텍스트 */
+.celebration-text {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #4caf50;
+    opacity: 0;
+    animation: celebration-text-appear 2s ease-out forwards;
+}
+
+@keyframes celebration-text-appear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
