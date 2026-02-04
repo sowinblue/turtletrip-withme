@@ -85,7 +85,7 @@ def delete_todo(task_id):
 @app.route('/edit_todo/<task_id>', methods=['POST'])
 def edit_todo(task_id):
     # 1. 수정된 내용 가져오기
-    new_content = request.form.get('todo_content')
+    new_content = request.form.get('content')
     
     # 2. 빈 값 검사 (유효성 검사기 활용)
     if not tv.is_valid(new_content):
