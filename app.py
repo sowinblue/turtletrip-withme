@@ -101,6 +101,23 @@ def edit_todo(task_id):
     return redirect(url_for('index'))
 
 
+# 수정 페이지를 보여주는 역할 (GET)
+@app.route('/edit_todo/<task_id>', methods=['GET'])
+def edit_page(task_id):
+    # 1. 기존 데이터 가져오기
+    data = dm.get_user_progress()
+    
+    # 2. 리스트에서 수정하려는 task 찾기
+    task = next((t for t in data['tasks'] if t['id'] == task_id), None)
+    
+    # 3. 만약 해당 id의 task가 없으면 메인으로 튕겨내기
+    if task is None:
+        return redirect(url_for('index'))
+    
+    # 4. 찾은 task 데이터를 edit.html에 전달하며 페이지 띄우기
+    return render_template("edit.html", task=task)
+
+
 @app.route('/api/progress')
 def get_progress():
     """
