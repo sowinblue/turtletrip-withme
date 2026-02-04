@@ -31,3 +31,27 @@ class DataManager:
             # 입력한'data'를 JSON 문자열로 바꿔서 JSON 파일에 저장(던짐)
             # ensure_ascii=False를 써야 한글이 깨지지 않고 저장됨.
             # indent=4를 주면 파일이 예쁘게 정렬됨.
+
+    
+    #* 3. 특정 할 일 수정하기
+    def update_task(self, task_id, new_content):
+        data = self.get_user_progress()
+        
+        # 🛡️ 추가: 데이터 구조가 비정상적일 때 서버 터짐 방지
+        if not data or 'tasks' not in data:
+            print("로그: 데이터 형식이 잘못되어 수정을 중단합니다.")
+            return False
+        
+        is_updated=False
+        for task in data['tasks']:
+            # 🛡️ 보강: .get('id')를 써서 'id' 키가 없어도 에러 안 나게 함
+            if task.get('id') == task_id:
+                task['content'] = new_content
+                is_updated = True  # 내용 변경
+                break
+
+        # 🛡️ 추가: 실제로 수정된 게 있을 때만 저장 실행
+        if is_updated:
+            self.save_tasks(data)
+            return True
+        return False
