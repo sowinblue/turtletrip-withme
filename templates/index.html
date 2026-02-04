@@ -46,7 +46,8 @@
                     <input type="checkbox" 
                         class="real-checkbox" 
                         data-id="{{ task.id }}" 
-                        {% if task.is_done %}checked{% endif %}>
+                        {% if task.is_done %}checked{% endif %}
+                        onchange="window.location.href='/toggle_todo/{{ task.id }}'">
                     <span class="checkmark"></span>
                 </label>
 
