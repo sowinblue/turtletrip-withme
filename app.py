@@ -79,6 +79,28 @@ def delete_todo(task_id):
     dm.save_tasks(data)
     return redirect(url_for('index'))
 
+
+
+# 할 일 수정 로직 (POST 방식)
+@app.route('/edit_todo/<task_id>', methods=['POST'])
+def edit_todo(task_id):
+    # 1. 수정된 내용 가져오기
+    new_content = request.form.get('todo_content')
+    
+    # 2. 빈 값 검사 (유효성 검사기 활용)
+    if not tv.is_valid(new_content):
+        # 만약 비어있다면 수정하지 않고 메인으로 돌아가거나 에러 처리
+        return redirect(url_for('index'))
+
+    # 3. 데이터 업데이트 호출
+    dm.update_task(task_id, new_content)
+    
+    print(f"ID {task_id}의 내용이 '{new_content}'로 수정되었습니다.")
+    
+    # 4. 수정 완료 후 메인 페이지로 이동
+    return redirect(url_for('index'))
+
+
 @app.route('/api/progress')
 def get_progress():
     """
