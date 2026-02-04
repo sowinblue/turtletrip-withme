@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="main-container">
 
         <section class="turtle-section">
             <h2>거북이의 여행 🐢</h2>
-            
-            <div class="turtle_moveline-section"> <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
+
+            <div class="turtle_moveline-section">
+                <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle"
+                        src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
 
@@ -37,32 +41,33 @@
             </form>
 
             <div class="todo-list-container">
-                
+
                 {% for task in tasks %}
-                
+
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
-                    
-                <label class="checkbox-label">
-                    <input type="checkbox" 
-                        class="real-checkbox" 
-                        data-id="{{ task.id }}" 
-                        {% if task.is_done %}checked{% endif %}>
-                    <span class="checkmark"></span>
-                </label>
 
-                <span class="todo-text">{{ task.content }}</span>
-                <div class="more-menu-wrapper" style="margin-left: 10px;">
-                    <button type="button" onclick="toggleMenu('menu-{{ task.id }}')" style="background:none; border:none; cursor:pointer;">⋮</button>
-                    
-                    <div id="menu-{{ task.id }}" class="todo-menu" style="display: none; background: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                        <a href="htmx를 통해 edit.html 내용으로 바꿔주는 일종의 링크 연결" style="font-size: 12px; margin-right: 5px;">수정</a>
-                        <form action="/delete_todo/{{ task.id }}" method="POST" style="display: inline;">
-                            <button type="submit" class="delete-btn">삭제</button>
-                        </form>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="real-checkbox" data-id="{{ task.id }}" {% if task.is_done
+                            %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <span class="todo-text">{{ task.content }}</span>
+                    <div class="more-menu-wrapper" style="margin-left: 10px;">
+                        <button type="button" onclick="toggleMenu('menu-{{ task.id }}')"
+                            style="background:none; border:none; cursor:pointer;">⋮</button>
+
+                        <div id="menu-{{ task.id }}" class="todo-menu"
+                            style="display: none; background: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                            <a href="htmx를 통해 edit.html 내용으로 바꿔주는 일종의 링크 연결"
+                                style="font-size: 12px; margin-right: 5px;">수정</a>
+                            <form action="/delete_todo/{{ task.id }}" method="POST" style="display: inline;">
+                                <button type="submit" class="delete-btn">삭제</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
                 {% endfor %}
         </section>
     </div>
@@ -70,6 +75,7 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/turtle.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/checklist.js') }}" defer></script>
-    
+
 </body>
+
 </html>

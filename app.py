@@ -96,7 +96,13 @@ def get_progress():
 
     return jsonify({"rate": rate})
 
+@app.route('/background') #sb 24_배경에 접속하면 이 함수를 실행해라.
+def background():
+    return render_template('background/background.html') #templates폴더 안에 있는 html문법을 찾아옴. 
+    # 파이썬 코드 안에 있는 변수값을 html의 빈칸_{{flask문법}}에 끼워넣어줌
+
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
     # 서버 실행(코드 수정 시 자동 반영)
     app.run(debug=True)  #디버그 모드로 서버 실행(코드 수정시 자동 재시작)
+
