@@ -8,9 +8,12 @@
     width: 0%; /* 초기값 */
     height: 100%;
     background-color: #4caf50; /* 초록색 */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /*글짜 오른쪽 정렬 */
     transition: width 0.6s ease-out;
 }
-
 
 /* 1. 거북이를 감싸는 박스 설정 */
 .turtle_container {
@@ -30,4 +33,32 @@
     width: 100%;
     height: 100px;       /* 거북이 키에 맞춰 적절히 조절 */
     overflow: hidden;    /* 거북이가 100% 넘어가서 삐져나가지 않게 */
+}
+
+/* ============================================
+   3. 점프 애니메이션 (1~2시간 작업)
+   ============================================ */
+
+/* 점프 키프레임 정의 */
+@keyframes turtle-jump {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    30% {
+        transform: translateY(-25px) rotate(-5deg); /* 위로 점프 */
+    }
+    50% {
+        transform: translateY(-35px) rotate(0deg); /* 최고점 */
+    }
+    70% {
+        transform: translateY(-25px) rotate(5deg); /* 내려오는 중 */
+    }
+    100% {
+        transform: translateY(0) rotate(0deg); /* 착지 */
+    }
+}
+
+/* 점프 애니메이션 클래스 */
+.jump-animation {
+    animation: turtle-jump 0.6s ease-in-out;
 }
