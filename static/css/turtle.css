@@ -50,7 +50,7 @@ position: relative; /* 🌟 필수: 거북이 위치의 기준점이 됩니다 *
 width: 100%;
 height: 100px; /* 거북이 키에 맞춰 적절히 조절 */
 overflow: visible; /* 🎯 변경: 거북이가 삐져나가도 보이게 (잘림 방지) */
-padding: 0 30px; /* 🎯 거북이 너비(90px) ÷ 2 = 45px */
+padding: 0 45px; /* 🎯 거북이 너비(90px) ÷ 2 = 45px */
 box-sizing: border-box;
 }
 
