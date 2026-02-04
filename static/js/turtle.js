@@ -11,6 +11,9 @@ class TurtleAnimation {
 
         // 2. 이전 진행률 저장 (점프 트리거용)
         this.previousRate = 0;
+        
+        // 3. 완주 상태 플래그
+        this.isCompleted = false;
 
         // 4. 요소들이 잘 있는지 확인 (안정성 체크)
         this.checkElements();
@@ -44,6 +47,30 @@ class TurtleAnimation {
     }
 
     // ============================================
+    // 2~3시간: 100% 완주 연출
+    // ============================================
+    triggerCelebration() {
+        if (!this.turtleImg || !this.moveline) return;
+
+        console.log("🎉 완주 축하 연출 시작!");
+
+        // 1. 거북이 이미지 변경 (있다면)
+        // this.turtleImg.src = "{{ url_for('static', filename='images/turtle/turtle_happy.svg') }}";
+
+        // 2. 거북이에 반짝임 효과 추가
+        this.turtleImg.classList.add('turtle-celebration');
+
+        // 3. 축하 텍스트 생성
+        const celebrationText = document.createElement('div');
+        celebrationText.className = 'celebration-text';
+        celebrationText.textContent = '🎉 완주!';
+        this.turtleContainer.appendChild(celebrationText);
+
+        // 완주 상태 플래그 설정
+        this.isCompleted = true;
+    }
+
+    // ============================================
     // 화면을 실제로 움직이는 함수
     // ============================================
     updateUI(percent) {
@@ -70,6 +97,13 @@ class TurtleAnimation {
         // ============================================
         if (percent > this.previousRate && percent < 100) {
             this.triggerJump();
+        }
+
+        // ============================================
+        // 5. 완주 연출 트리거 (rate === 100)
+        // ============================================
+        if (percent === 100 && !this.isCompleted) {
+            this.triggerCelebration();
         }
 
         // 현재 값을 이전 값으로 저장
