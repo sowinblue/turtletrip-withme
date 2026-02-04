@@ -61,7 +61,7 @@ def update_todo():
     return redirect(url_for('index'))
 
 # 체크박스 상태 토글 (완료/미완료 변경)
-@app.route('/toggle_todo/<task_id>', method=['POST', 'GET'])
+@app.route('/toggle_todo/<task_id>', methods=['POST', 'GET'])
 def toggle_todo(task_id):
     data = dm.get_user_progress()
     for task in data['tasks']:
