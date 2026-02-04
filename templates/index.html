@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="main-container">
 
         <section class="turtle-section">
             <h2>거북이의 여행 🐢</h2>
-            
-            <div class="turtle_moveline-section"> <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle" src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
+
+            <div class="turtle_moveline-section">
+                <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle"
+                        src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
 
@@ -37,9 +41,9 @@
             </form>
 
             <div class="todo-list-container">
-                
+
                 {% for task in tasks %}
-                
+
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
                     
                 <label class="checkbox-label">
@@ -61,9 +65,8 @@
                             <button type="submit" class="delete-btn">삭제</button>
                         </form>
                     </div>
-                </div>
 
-            </div>
+                </div>
                 {% endfor %}
         </section>
     </div>
@@ -71,6 +74,7 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/turtle.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/checklist.js') }}" defer></script>
-    
+
 </body>
+
 </html>
