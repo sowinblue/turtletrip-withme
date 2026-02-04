@@ -69,6 +69,34 @@ class TurtleAnimation {
         // 완주 상태 플래그 설정
         this.isCompleted = true;
     }
+    
+    // 완주 연출 해제 (rate < 100일 때)
+    removeCelebration() {
+        if (!this.turtleImg || !this.moveline) return;
+
+        console.log("🔄 완주 연출 해제 - 기본 상태로 복귀");
+
+        // 1. 거북이 이미지 원래대로 (변경했다면)
+        // this.turtleImg.src = "{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}";
+
+        // 2. 반짝임 효과 제거
+        this.turtleImg.classList.remove('turtle-celebration');
+
+        // 3. 축하 텍스트 제거
+        const celebrationText = this.turtleContainer.querySelector('.celebration-text');
+        if (celebrationText) {
+            celebrationText.remove();
+        }
+
+        // 4. 배경 효과 제거
+        const celebrationBg = this.moveline.querySelector('.celebration-background');
+        if (celebrationBg) {
+            celebrationBg.remove();
+        }
+
+        // 완주 상태 플래그 초기화
+        this.isCompleted = false;
+    }
 
     // ============================================
     // 화면을 실제로 움직이는 함수
@@ -106,6 +134,13 @@ class TurtleAnimation {
             this.triggerCelebration();
         }
 
+        // ============================================
+        // 6. 완주 연출 해제 (rate < 100일 때)
+        // ============================================
+        if (percent < 100 && this.isCompleted) {
+            this.removeCelebration();
+        }
+        
         // 현재 값을 이전 값으로 저장
         this.previousRate = percent;
     } 
