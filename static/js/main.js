@@ -80,7 +80,7 @@ function handleTodoToggle(checkbox, todoItem) {
     })
     .then(response => {
         // 서버 통신 실패 시 이후 흐름 중단
-        if (!response.ok) throw new Error('Toggle failed');
+        if (!response.ok) throw new Error('상태 변경 실패');
 
         // [Step 2] 상태 변경 이후의 "새로운 진행률" 요청
         // 진행률은 서버가 계산하는 단일 진실(Source of Truth)
@@ -121,45 +121,22 @@ function handleTodoToggle(checkbox, todoItem) {
  */
 function updateProgressUI(rate) {
 
-    // 진행률 바
+    // 진행률 바 width 변경
     const progressBar = document.querySelector('.progress-bar-fill');
+    if (progressBar) {
+        progressBar.style.width = `${rate}%`;
+    }
 
-    // 퍼센트 텍스트
+    // 퍼센트 텍스트 변
     const progressText = document.querySelector('.progress-percentage');
+    if (progressText) {
+        progressText.innerText = `${rate}%`;
+    }
 
     // 거북이 캐릭터 요소
     const turtle = document.querySelector('.turtle-character');
-
-    // 각 요소가 존재할 경우에만 안전하게 조작
-    if (progressBar) progressBar.style.width = `${rate}%`;
-    if (progressText) progressText.innerText = `${rate}%`;
-    
     // 거북이 위치 이동 (CSS left 기반)
     if (turtle) {
         turtle.style.left = `${rate}%`;
-    }
-}
-
-
-/**
- * 🔹 거북이 말풍선 표시 함수
- * 사용 목적:
- * - 달성률 특정 구간 도달 알림
- * - 사용자 동기부여 메시지 출력
- */
-function showTurtleMessage(message) {
-
-    // 말풍선 DOM 요소 선택
-    const bubble = document.querySelector('.turtle-bubble');
-
-    if (bubble) {
-        // 메시지 설정
-        bubble.innerText = message;
-
-        // 활성화 클래스 추가 (CSS 애니메이션 트리거)
-        bubble.classList.add('active');
-
-        // 3초 후 자동 비활성화
-        setTimeout(() => bubble.classList.remove('active'), 3000);
     }
 }
