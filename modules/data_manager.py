@@ -36,8 +36,22 @@ class DataManager:
     #* 3. 특정 할 일 수정하기
     def update_task(self, task_id, new_content):
         data = self.get_user_progress()
+        
+        # 🛡️ 추가: 데이터 구조가 비정상적일 때 서버 터짐 방지
+        if not data or 'tasks' not in data:
+            print("로그: 데이터 형식이 잘못되어 수정을 중단합니다.")
+            return False
+        
+        is_updated=False
         for task in data['tasks']:
-            if task['id'] == task_id:
-                task['content'] = new_content  # 내용 변경
+            # 🛡️ 보강: .get('id')를 써서 'id' 키가 없어도 에러 안 나게 함
+            if task.get('id') == task_id:
+                task['content'] = new_content
+                is_updated = True  # 내용 변경
                 break
-        self.save_tasks(data)
+
+        # 🛡️ 추가: 실제로 수정된 게 있을 때만 저장 실행
+        if is_updated:
+            self.save_tasks(data)
+            return True
+        return False
