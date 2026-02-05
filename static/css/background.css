@@ -1,14 +1,14 @@
 :root { --brightness: 1.0; --hue: 0deg; }
 
 .viewport {
-    width: 100vw; height: 100vh;
-    filter: brightness(var(--brightness)) hue-rotate(var(--hue));
-    transition: filter 2.0s ease-in-out; 
-    overflow: hidden;
-    position: fixed; /* 다른 콘텐츠 위에 고정된 배경으로 */
+    position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    z-index: -1; /* 다른 요소들 뒤에 위치 */
+    filter: brightness(var(--brightness)) hue-rotate(var(--hue));
+    transition: filter 2.0s ease-in-out;
+    z-index: 0; /* 다른 요소들(z-index가 더 높거나 없는)의 뒤에 위치 */
 }
 
 #target {

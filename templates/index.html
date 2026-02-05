@@ -14,15 +14,14 @@
 
 <body>
 
-    <div class="viewport">
-        <div id="target">
-            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
-        </div>
-    </div>
-
     <div class="main-container">
 
         <section class="turtle-section">
+            <div class="viewport">
+                <div id="target">
+                    <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+                </div>
+            </div>
             <h2>거북이의 여행 🐢</h2>
 
             <div class="turtle_moveline-section">
@@ -93,7 +92,7 @@
             const delta = (now - lastTime) / 1000;
             lastTime = now;
 
-            const viewWidth = window.innerWidth;
+            const viewWidth = target.parentNode.clientWidth;
             const step = (viewWidth * 2 / speed) * delta;
             
             currentX -= step;

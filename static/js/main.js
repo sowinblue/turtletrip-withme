@@ -44,18 +44,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!toggleResponse.ok) {
                     throw new Error('상태 변경 실패');
                 }
+                
+                const result = await toggleResponse.json();
+                const rate = result.new_rate;
 
-                console.log("✅ 서버 상태 저장 완료");
+                console.log(`📊 최신 진행률 수신: ${rate}%`);
 
-                // Step 2: 최신 진행률 가져오기
-                const progressResponse = await fetch('/api/progress');
-                const progressData = await progressResponse.json();
-                const rate = progressData.rate;
-
-                console.log(`📊 최신 진행률: ${rate}%`);
-
-                // Step 3: 진행률 UI 업데이트
+                // Step 2: 진행률 UI 업데이트
                 updateProgressUI(rate);
+
+                // Step 3: 배경 동적 업데이트
+                const brightness = 0.2 + (rate / 100) * 0.8;
+                const hue = (100 - rate) * 2;
+                const speed = 60.0 - (rate / 100) * 30.0;
+                
+                if (typeof window.updateEnv === 'function') {
+                    window.updateEnv(rate, brightness, hue, speed);
+                    console.log(`🌌 배경 업데이트: B:${brightness.toFixed(2)} H:${hue} S:${speed.toFixed(1)}`);
+                } else {
+                    console.warn("⚠️ window.updateEnv 함수를 찾을 수 없습니다.");
+                }
+
 
                 // Step 4: 거북이 업데이트
                 if (typeof window.updateTurtle === 'function') {
