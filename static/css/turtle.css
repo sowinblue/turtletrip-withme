@@ -6,7 +6,7 @@
 .turtle_container {
     position: absolute;
     bottom: 0;
-    left: 0;
+    /* left: calc({{ rate }}% * (1 - 90 / 100) + 45px);; */
     transition: left 0.6s ease-out;
     transform: translateX(-50%);
 }
