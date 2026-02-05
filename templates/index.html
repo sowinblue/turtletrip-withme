@@ -8,10 +8,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/turtle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
+    <div class="viewport">
+        <div id="target">
+            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+        </div>
+    </div>
+
     <div class="main-container">
 
         <section class="turtle-section">
@@ -75,6 +83,44 @@
     <script src="{{ url_for('static', filename='js/turtle.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/checklist.js') }}" defer></script>
 
+    <script>
+        let currentX = 0;
+        let speed = 45; 
+        const target = document.getElementById('target');
+        let lastTime = performance.now();
+
+        function animate(now) {
+            const delta = (now - lastTime) / 1000;
+            lastTime = now;
+
+            const viewWidth = window.innerWidth;
+            const step = (viewWidth * 2 / speed) * delta;
+            
+            currentX -= step;
+
+            if (currentX <= -(viewWidth * 2)) {
+                currentX += (viewWidth * 2);
+            }
+
+            target.style.transform = `translateX(${currentX}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        function updateEnv(p, b, h, s) {
+            document.documentElement.style.setProperty('--brightness', b);
+            document.documentElement.style.setProperty('--hue', h + 'deg');
+            speed = s;
+        }
+
+        // 페이지 로드 시 Flask에서 전달된 값으로 배경 즉시 업데이트
+        updateEnv({{ rate }}, {{ brightness }}, {{ hue }}, {{ speed }});
+
+        requestAnimationFrame(animate);
+
+        window.addEventListener('resize', () => {
+            currentX = 0;
+        });
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,30 @@
+:root { --brightness: 1.0; --hue: 0deg; }
+
+.viewport {
+    width: 100vw; height: 100vh;
+    filter: brightness(var(--brightness)) hue-rotate(var(--hue));
+    transition: filter 2.0s ease-in-out; 
+    overflow: hidden;
+    position: fixed; /* 다른 콘텐츠 위에 고정된 배경으로 */
+    top: 0;
+    left: 0;
+    z-index: -1; /* 다른 요소들 뒤에 위치 */
+}
+
+#target {
+    display: flex;
+    position: absolute;
+    top: 0; left: 0;
+    width: 300%; /* [원본-반전-원본] 3개 레이어 고정 */
+    height: 100%;
+    will-change: transform;
+}
+
+.layer {
+    flex: 0 0 33.3333%; /* 정확히 화면 너비 1개분 */
+    height: 100%;
+    background: url('../images/background/sea-landscape.jpg') center/cover no-repeat;
+}
+
+/* 사용자님의 정석: 좌우반전 로테이션 파노라마 */
+.layer:nth-child(2) { transform: scaleX(-1); }
