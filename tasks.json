@@ -1,3 +1,10 @@
 {
-
+    "tasks": [
+        {
+            "id": "4c41a3e5",
+            "content": "안녕",
+            "is_done": true
+        }
+    ],
+    "rate": 0
 }
