@@ -94,10 +94,10 @@ class ChecklistInteraction {
     }
 
 
-// 클래스 인스턴스 생성
-new ChecklistInteraction();
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new ChecklistInteraction());
+    if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new ChecklistInteraction();
+    });
 } else {
     new ChecklistInteraction();
 }
