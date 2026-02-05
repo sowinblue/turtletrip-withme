@@ -8,6 +8,7 @@
     bottom: 0;
     transition: left 0.6s ease-out;
     transform: translateX(-10%);
+    z-index: 10; /* 배경보다 앞으로 나오도록 설정 */
     }
 
 .turtle_moveline-section {
