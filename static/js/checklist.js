@@ -1,3 +1,4 @@
+
 class ChecklistInteraction {
     constructor() {
         this.init();
@@ -13,24 +14,25 @@ class ChecklistInteraction {
         window.toggleMenu = (menuId) => this.toggleMenu(menuId);
     }
 
+    // setupEventListeners() 함수 전체 교체
     setupEventListeners() {
+        // HTMX 이벤트는 document에 직접 바인딩
         document.body.addEventListener('htmx:afterOnLoad', (event) => {
-            // 1. 진행률 갱신
-            if (event.detail.target.id.includes('task-') || event.detail.xhr.status === 200) {
-                this.refreshProgress();
-            }
+            console.log("HTMX 응답 확인!", event.detail);
+            this.scrollToBottom();
+        });
 
-            //yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
-            /* 2. 수정된 부분: 조건을 'post' 요청 시로 단순화 */
-
-            if (event.detail.requestConfig.verb === 'post') {
-                this.scrollToBottom();
-            }
+        // 추가: HTMX 요청 시작 확인용
+        document.body.addEventListener('htmx:afterRequest', (event) => {
+            console.log("HTMX 요청 완료!", event.detail);
+            this.refreshProgress();
         });
     }
-    // 원래 내용//
-    //         if (event.detail.requestConfig.verb === 'post' && event.detail.target.classList.contains('todo-list-container')) {
-    //             this.scrollToBottom();
+
+
+
+
+    //yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
 
 
     //2. 진행률 갱신 함수
@@ -103,3 +105,8 @@ class ChecklistInteraction {
 
 // 클래스 인스턴스 생성
 new ChecklistInteraction();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new ChecklistInteraction());
+} else {
+    new ChecklistInteraction();
+}
