@@ -56,23 +56,6 @@ body {
     font-size: 24px;
 }
 
-/*거북이가 돌아다닐 영역_수빈 22*/
-.turtle_moveline-section {
-    height: 100px;
-    /* 거북이 공간 확보 */
-    width: 100%;
-    position: relative;
-    /*img 이동의 기준*/
-    margin-top: 20px;
-}
-
-/*거북이 css_수빈 22*/
-.turtle_container {
-    position: absolute;
-    bottom: 0;
-    transition: left 0.5s ease;
-    /* 부드러운 이동 */
-}
 
 /* 하단 : 체크리스트 영역 65%비중 */
 .checklist-section {
