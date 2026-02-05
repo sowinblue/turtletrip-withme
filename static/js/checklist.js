@@ -76,32 +76,23 @@ class ChecklistInteraction {
     }
 
 
-    // 수정(sb) - setTimeout
-    //todo - yj: 2월 3일 명세) 리스트 하단으로 자동 스크롤해주는 함수입니다.
+    // scrollToBottom() 함수 수정
     scrollToBottom() {
-        console.log("동작함")
-        const container = document.querySelector('.todo-list-container'); //sb
+        console.log("scrollToBottom 호출됨");
+        const container = document.querySelector('.todo-list-container');
         if (container) {
-            // 브라우저가 리스트를 다 그린 후 실행되도록 0ms 지연
+            console.log("컨테이너 발견, 스크롤 높이:", container.scrollHeight);
             setTimeout(() => {
                 container.scrollTo({
-                    top: container.scrollHeight, // 이제 새로 추가된 높이까지 포함됨!
+                    top: container.scrollHeight,
                     behavior: 'smooth'
                 });
-            }, 0);
+            }, 100); // 0ms → 100ms로 변경
+        } else {
+            console.log("컨테이너를 찾을 수 없음");
         }
     }
-    // 수정전
-    // scrollToBottom() {
-    //     const container = document.querySelector('.todo-list-container');
-    //     if (container) {
-    //         container.scrollTo({
-    //             top: container.scrollHeight,
-    //             behavior: 'smooth'
-    //         });
-    //     }
-    // }
-}
+
 
 // 클래스 인스턴스 생성
 new ChecklistInteraction();
