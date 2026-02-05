@@ -49,19 +49,7 @@ body {
     font-size: 24px;
 }
 
-/* 거북이 이동 라인 */
-.turtle_moveline-section {
-    height: 100px;
-    width: 100%;
-    position: relative;
-    margin-top: 20px;
-}
 
-.turtle_container {
-    position: absolute;
-    bottom: 0;
-    transition: left 0.5s ease;
-}
 
 /* 진행률 바 */
 .progress-container {
