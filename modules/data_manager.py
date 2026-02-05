@@ -13,23 +13,28 @@ class DataManager:
     def get_user_progress(self):
         # 파일이 아예 존재하지 않는 경우를 먼저 체크한다.
         if not os.path.exists(self.file_path):
-            return {"tasks": [], "rate": 0}
+            initial_data = {"tasks": [],"rate": 0}
+            self.save_tasks(initial_data)
+            return initial_data
+        
         try: #* 일단 하고싶은거 해라
             with open(self.file_path, 'r', encoding='utf-8') as f:
                 # json.load(f)를 시도한다.
                 data = json.load(f)
                 
-                # 데이터가 만약 비어있거나 리스트 형태가 아니면 기본 구조를 잡아준다.
-                if not data:
+                # 파일은 있는데 내용이 None이거나 tasks 키가 없는 경우 방어
+                if not data or 'tasks' not in data:
                     return {"tasks": [], "rate": 0}
                 return data
 
-        except (json.JSONDecodeError, ValueError):
+        except (json.JSONDecodeError, ValueError, KeyError):
             # 🔹 [핵심] JSON 파일이 깨졌을 때 발생하는 에러를 잡아낸다.
             # 파일은 있지만 내용이 꼬였을 경우(Extra data 등), 
             # 에러를 뿜지 않고 빈 데이터를 반환하여 앱이 죽지 않게 책임진다.
             print(f"경고: {self.file_path} 파일이 손상되었습니다. 초기화합니다.")
-            return {"tasks": [], "rate": 0}
+            backup_data = {"tasks":[], "rate": 0}
+            self.save_tasks(backup_data)
+            return backup_data
 
 
     #* 2. JSON 파일 데이터저장
