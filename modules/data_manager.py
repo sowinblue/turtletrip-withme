@@ -28,12 +28,10 @@ class DataManager:
                 return data
 
         except (json.JSONDecodeError, ValueError, KeyError):
-            # 🔹 [핵심] JSON 파일이 깨졌을 때 발생하는 에러를 잡아낸다.
-            # 파일은 있지만 내용이 꼬였을 경우(Extra data 등), 
-            # 에러를 뿜지 않고 빈 데이터를 반환하여 앱이 죽지 않게 책임진다.
+            # 3. 파일 내용이 꼬여서 못 읽을 경우 (가장 위험한 상황)
             print(f"경고: {self.file_path} 파일이 손상되었습니다. 초기화합니다.")
             backup_data = {"tasks":[], "rate": 0}
-            self.save_tasks(backup_data)
+            self.save_tasks(backup_data) # 깨진 파일을 깨끗한 초기 상태로 덮어쓰기
             return backup_data
 
 
