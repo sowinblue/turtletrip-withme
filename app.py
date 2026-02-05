@@ -104,7 +104,7 @@ def edit_todo(task_id):
 
 # 수정 페이지를 보여주는 역할 (GET)
 @app.route('/edit_todo/<task_id>', methods=['GET'])
-def edit_page(task_id):
+def edit_todo(task_id):
     # 1. 기존 데이터 가져오기
     data = dm.get_user_progress()
     
