@@ -59,3 +59,21 @@
     50% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.2); }
     100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
+
+/*  Mobile Turtle Adjustment */
+@media (max-width: 768px) {
+
+    .turtle_moveline-section {
+        height: 70px;
+        padding: 0 30px; /* 모바일 거북이 여백 */
+    }
+
+    .turtle_container img {
+        width: 60px;
+    }
+
+    .celebration-text {
+        font-size: 18px;
+        top: -30px;
+    }
+}
