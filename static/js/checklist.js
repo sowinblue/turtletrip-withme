@@ -8,24 +8,30 @@ class ChecklistInteraction {
             this.setupEventListeners();
             this.setupOutsideClick();
         });
-        
+
         // 전역에서 호출할 수 있도록 바인딩 (toggleMenu용)
         window.toggleMenu = (menuId) => this.toggleMenu(menuId);
     }
 
     setupEventListeners() {
-        // 1. HTMX 이벤트 리스너 (서버 작업 후 갱신)
         document.body.addEventListener('htmx:afterOnLoad', (event) => {
+            // 1. 진행률 갱신
             if (event.detail.target.id.includes('task-') || event.detail.xhr.status === 200) {
                 this.refreshProgress();
             }
-            
-            //todo - yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
-            if (event.detail.requestConfig.verb === 'post' && event.detail.target.classList.contains('todo-list-container')) {
+
+            //yj: 2월 3일 명세) 할 일을 추가하면 자동으로 방금 추가한 할 일을 볼 수 있게 맨 아래로 스크롤해주는 기능을 담당하는 부분입니다. 현재 scrollToBottom() 함수가 정상 작동 안하므로 fix 후 테스트해주세요.
+            /* 2. 수정된 부분: 조건을 'post' 요청 시로 단순화 */
+
+            if (event.detail.requestConfig.verb === 'post') {
                 this.scrollToBottom();
             }
-        }); 
+        });
     }
+    // 원래 내용//
+    //         if (event.detail.requestConfig.verb === 'post' && event.detail.target.classList.contains('todo-list-container')) {
+    //             this.scrollToBottom();
+
 
     //2. 진행률 갱신 함수
     //todo - yj: 테스트 시나리오 1) 서버 터미널에서 체크박스 해제/체크하는 경우
@@ -67,16 +73,32 @@ class ChecklistInteraction {
         });
     }
 
+
+    // 수정(sb) - setTimeout
     //todo - yj: 2월 3일 명세) 리스트 하단으로 자동 스크롤해주는 함수입니다.
     scrollToBottom() {
-        const container = document.querySelector('.todo-list-container');
+        console.log("동작함")
+        const container = document.querySelector('.todo-list-container'); //sb
         if (container) {
-            container.scrollTo({
-                top: container.scrollHeight,
-                behavior: 'smooth'
-            });
+            // 브라우저가 리스트를 다 그린 후 실행되도록 0ms 지연
+            setTimeout(() => {
+                container.scrollTo({
+                    top: container.scrollHeight, // 이제 새로 추가된 높이까지 포함됨!
+                    behavior: 'smooth'
+                });
+            }, 0);
         }
     }
+    // 수정전
+    // scrollToBottom() {
+    //     const container = document.querySelector('.todo-list-container');
+    //     if (container) {
+    //         container.scrollTo({
+    //             top: container.scrollHeight,
+    //             behavior: 'smooth'
+    //         });
+    //     }
+    // }
 }
 
 // 클래스 인스턴스 생성
