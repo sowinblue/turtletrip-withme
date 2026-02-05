@@ -47,17 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log("✅ 서버 상태 저장 완료");
 
-                // Step 2: 최신 진행률 가져오기
-                const progressResponse = await fetch('/api/progress');
-                const progressData = await progressResponse.json();
-                const rate = progressData.rate;
-
+                // Step 2: [개선] 별도의 fetch 없이 결과에 포함된 new_rate 사용
+                const rate = result.new_rate;
                 console.log(`📊 최신 진행률: ${rate}%`);
 
-                // Step 3: 진행률 UI 업데이트
+                // Step 3: UI 및 거북이 업데이트
                 updateProgressUI(rate);
-
-                // Step 4: 거북이 업데이트
                 if (typeof window.updateTurtle === 'function') {
                     window.updateTurtle(rate);
                     console.log("🐢 거북이 업데이트 완료");
