@@ -33,7 +33,7 @@ class ChecklistInteraction {
     //todo - yj: 두 테스트 시나리오에서 실시간으로 서버 터미널에 진행률 출력되는 것까지 확인했습니다. 거북이 섹션과는 연관 X
     async refreshProgress() {
         try {
-            const res = await fetch('/api/tasks/progress');
+            const res = await fetch('/api/progress');
             const data = await res.json();
             if (window.updateProgress) {
                 window.updateProgress(data.percent);
