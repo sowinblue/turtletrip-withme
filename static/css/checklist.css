@@ -174,3 +174,42 @@
     color: #ff6b6b;
     cursor: pointer;
 }
+
+
+/* Mobile Checklist UX */
+@media (max-width: 768px) {
+
+    /* 입력 영역 세로 배치 */
+    .input-group {  
+        flex-direction: column;
+    }
+
+    .add-btn {
+        width: 100%;
+        padding: 12px 0;
+    }
+
+    .input-box {
+        font-size: 15px;
+    }
+
+    /* 터치 영역 확대 */
+    .checkbox-label {
+        width: 32px;
+        height: 32px;
+    }
+
+    .checkmark {
+        width: 32px;
+        height: 32px;
+    }
+
+    .todo-text {
+        font-size: 15px;
+    }
+
+    .more-menu-wrapper button {
+        font-size: 20px;
+        padding: 6px;
+    }
+}
