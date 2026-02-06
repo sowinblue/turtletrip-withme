@@ -149,11 +149,22 @@ class TurtleAnimation {
             this.progressBar.style.width = percent + "%";
         }
 
-        // 3. 상태바 안의 텍스트 숫자 변경
+        //2. [추가] 하트 이벤트 발생 조건 체크
+        if ((percent === 50 || isEvent) && !this.isEventRunning) {
+        this.triggerHalfwayEvent(percent);
+    }
+
+        // 3. [수정] 하트 연출 중이 아닐 때만 기존 로직 실행
+    else if (!this.isEventRunning) {
         const textNode = document.querySelector('.progress-text');
         if (textNode) {
             textNode.textContent = percent + "%";
         }
+
+        if (percent > this.previousRate && percent < 100) {
+            this.triggerJump();
+        }
+    }
 
         // ============================================
         // 4. 점프 애니메이션 트리거 (rate 증가 시)
@@ -191,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 전역 함수로 제공 (외부에서 호출 가능)
     window.updateTurtle = function(rate,isEvent) {
         if (turtleAnimation) {
-            turtleAnimation.updateUI(rate);
+            turtleAnimation.updateUI(rate,isEvent);
         } else {
             console.error("❌ 거북이 애니메이션이 초기화되지 않았습니다.");
         }
