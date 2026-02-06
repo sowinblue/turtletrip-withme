@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Step 4: 거북이 업데이트 및 이벤트 트리거 전송
                 if (typeof window.updateTurtle === 'function') {
                     // 특정 조건일 때 이벤트 플래그를 전송
-                    const isEventTriggered = (rate === 50);
+                    const isEventTriggered = (rate === 50 || rate === 100);
                     window.updateTurtle(rate, isEventTriggered);
                     console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
                 } else {
