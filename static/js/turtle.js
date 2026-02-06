@@ -72,7 +72,7 @@ class TurtleAnimation {
         // 3. 축하 텍스트 생성
         const celebrationText = document.createElement('div');
         celebrationText.className = 'celebration-text';
-        celebrationText.textContent = '🎉 완주!';
+        celebrationText.textContent = '🎉 완주! 🎉';
         this.turtleContainer.appendChild(celebrationText);
 
         // 완주 상태 플래그 설정
