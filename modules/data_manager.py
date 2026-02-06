@@ -13,7 +13,7 @@ class DataManager:
     def get_user_progress(self):
         # 파일이 아예 존재하지 않는 경우를 먼저 체크한다.
         if not os.path.exists(self.file_path):
-            initial_data = {"tasks": [],"rate": 0}
+            initial_data = {"tasks": [],"Event_rate": 50}
             self.save_tasks(initial_data)
             return initial_data
         
@@ -24,13 +24,13 @@ class DataManager:
                 
                 # 파일은 있는데 내용이 None이거나 tasks 키가 없는 경우 방어
                 if not data or 'tasks' not in data:
-                    return {"tasks": [], "rate": 0}
+                    return {"tasks": [], "Event_rate": 50}
                 return data
 
         except (json.JSONDecodeError, ValueError, KeyError):
             # 3. 파일 내용이 꼬여서 못 읽을 경우 (가장 위험한 상황)
             print(f"경고: {self.file_path} 파일이 손상되었습니다. 초기화합니다.")
-            backup_data = {"tasks":[], "rate": 0}
+            backup_data = {"tasks":[], "Event_rate": 50}
             self.save_tasks(backup_data) # 깨진 파일을 깨끗한 초기 상태로 덮어쓰기
             return backup_data
 
