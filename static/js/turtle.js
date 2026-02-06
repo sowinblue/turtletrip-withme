@@ -14,7 +14,8 @@ class TurtleAnimation {
         
         // 3. 완주 상태 플래그
         this.isCompleted = false;
-
+        //하트 연출이 진행 중인지 확인하는 isEventRunning 변수
+        this.isEventRunning = false;
         // 4. 요소들이 잘 있는지 확인 (안정성 체크)
         this.checkElements();
     }
@@ -27,6 +28,40 @@ class TurtleAnimation {
         if (this.turtleContainer && this.progressBar) {
             console.log("✅ 모든 요소 준비 완료! 이제 명령을 기다립니다.");
         } 
+    }
+
+    // ============================================
+    // [신규] 50% 지점 하트 연출 로직
+    // ============================================
+    triggerHalfwayEvent(percent) {
+        if (this.isEventRunning) return; // 중복 실행 방지
+        this.isEventRunning = true;
+
+        console.log("✨ 50% 달성! 하트 연출");
+
+        // 1. 점프 실행 (하트와 동시에 뛰게 함)
+        this.triggerJump();
+
+        // 2. 텍스트를 하트로 변경
+        const originalText = percent + "%";
+        if (this.progressText) {
+            this.progressText.textContent = "❤️";
+            this.progressText.style.fontSize = "16px";
+        }
+
+        // 3. 거북이 반짝임 효과 (기존 완주 로직 재활용)
+        this.turtleImg.classList.add('turtle-celebration');
+
+        // 4. 1초 후 원복
+        setTimeout(() => {
+            if (this.progressText) {
+                this.progressText.textContent = originalText;
+                this.progressText.style.fontSize = "11px";
+            }
+            this.turtleImg.classList.remove('turtle-celebration');
+            this.isEventRunning = false;
+            console.log("🔄 하트 연출 종료");
+        }, 1000);
     }
 
     // ============================================
@@ -101,7 +136,7 @@ class TurtleAnimation {
     // ============================================
     // 화면을 실제로 움직이는 함수
     // ============================================
-    updateUI(percent) {
+    updateUI(percent,isEvent) {
         console.log(`현재 진행률: ${percent}% - 거북이 이동 중...`);
 
         // 1. 거북이 위치 반영
@@ -154,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     turtleAnimation = new TurtleAnimation();
     
     // 전역 함수로 제공 (외부에서 호출 가능)
-    window.updateTurtle = function(rate) {
+    window.updateTurtle = function(rate,isEvent) {
         if (turtleAnimation) {
             turtleAnimation.updateUI(rate);
         } else {
