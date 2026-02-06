@@ -33,16 +33,17 @@
 
             <div class="turtle_moveline-section">
                 <div class="turtle_container" style="left: {{ rate }}%;">
+                    <div class="turtle-wrapper"> <!--거북이와 말풍선을 하나로 묶음-->
                     <img id="turtle_img" class="turtle"
-                        src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
-                    <!--말풍선과 이미지 부분 위치 변경-->
-                        <div class="progress-bubble"> <!--말풍선 모양 잡는 부분-->
-                            <span class="progress-text">{{ rate }}%</span> <!--내용물-->
+                            src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기"
+                            width="90">
+                        <!--말풍선과 이미지 부분 위치 변경-->
+                        <div class="progress-bubble"> <!--말풍선-->
+                            <span class="progress-text">{{ rate }}%</span>
                         </div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- <div class="progress-container"> -->
         </section>
 
         <section class="progress-bar-section"> <!--progress-container 분리-->
