@@ -8,8 +8,9 @@
     bottom: 0;
     transition: left 0.6s ease-out;
     transform: translateX(-10%);
-    z-index: 10; /* 배경보다 앞으로 나오도록 설정 */
-    }
+    z-index: 10;
+    /* 배경보다 앞으로 나오도록 설정 */
+}
 
 .turtle_moveline-section {
     position: relative;
@@ -22,11 +23,25 @@
 
 /* 점프 애니메이션 */
 @keyframes turtle-jump {
-    0% { transform: translateY(0) rotate(0deg); }
-    30% { transform: translateY(-25px) rotate(-5deg); }
-    50% { transform: translateY(-35px) rotate(0deg); }
-    70% { transform: translateY(-25px) rotate(5deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    30% {
+        transform: translateY(-25px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-35px) rotate(0deg);
+    }
+
+    70% {
+        transform: translateY(-25px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
 }
 
 .jump-animation {
@@ -35,8 +50,15 @@
 
 /* 완주 연출 */
 @keyframes celebration-glow {
-    0%, 100% { filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5)); }
-    50% { filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 20px rgba(76, 175, 80, 1));
+    }
 }
 
 .turtle-celebration {
@@ -44,21 +66,46 @@
 }
 
 .celebration-text {
+    /* 1. 줄바꿈 절대 금지 (가로로 강제 정렬) */
+    white-space: nowrap;
+
+    /* 2. 위치 설정 (거북이 주변 적당한 곳) */
     position: absolute;
-    top: -40px;
+    bottom: 150%;
+    /* 말풍선보다 더 위에 띄우기 */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 24px;
+
+    /* 3. 디자인 고도화 */
+    font-size: 30px;
     font-weight: bold;
-    color: #4caf50;
-    opacity: 0;
-    animation: celebration-text-appear 2s ease-out forwards;
+    color: #fcfd97;
+    /* 황금색 축하 효과 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 101;
+    /* 말풍선보다 앞에 */
+
+    /* 혹시 부모가 flex라면 폭을 자동으로 잡게 함 */
+    display: inline-block;
 }
 
+
+
 @keyframes celebration-text-appear {
-    0% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.5); }
-    50% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.2); }
-    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.5);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
 }
 
 /*  Mobile Turtle Adjustment */
@@ -66,7 +113,8 @@
 
     .turtle_moveline-section {
         height: 70px;
-        padding: 0 30px; /* 모바일 거북이 여백 */
+        padding: 0 30px;
+        /* 모바일 거북이 여백 */
     }
 
     .turtle_container img {
