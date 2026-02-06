@@ -44,15 +44,30 @@
 }
 
 .celebration-text {
+    /* 1. 줄바꿈 절대 금지 (가로로 강제 정렬) */
+    white-space: nowrap;
+
+    /* 2. 위치 설정 (거북이 주변 적당한 곳) */
     position: absolute;
-    top: -40px;
+
+    bottom: 150%;
+    /* 말풍선보다 더 위에 띄우기 */
+
     left: 50%;
     transform: translateX(-50%);
-    font-size: 24px;
+
+    /* 3. 디자인 고도화 */
+    font-size: 30px;
     font-weight: bold;
-    color: #4caf50;
-    opacity: 0;
-    animation: celebration-text-appear 2s ease-out forwards;
+    color: #fcfd97;
+    /* 황금색 축하 효과 */
+    
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 101;
+    /* 말풍선보다 앞에 */
+
+    display: inline-block;
+    /* 혹시 부모가 flex라면 폭을 자동으로 잡게 함 */
 }
 
 @keyframes celebration-text-appear {
