@@ -35,13 +35,13 @@ body {
 /* 상단: 거북이 섹션 */
 .turtle-section {
     flex: 0.35;
-    background: linear-gradient(to bottom, var(--turtle-bg-top), var(--turtle-bg-bot));
     padding: 20px;
     color: rgb(28, 14, 14);
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .turtle-section h2 {
@@ -54,6 +54,8 @@ body {
 .progress-container {
     margin-top: auto;
     width: 100%;
+    position: relative; /* z-index를 적용하려면 필요 */
+    z-index: 10; /* 배경보다 앞으로 나오도록 설정 */
 }
 
 .progress-track {
