@@ -42,27 +42,37 @@ class TurtleAnimation {
         // 1. 점프 실행 (하트와 동시에 뛰게 함)
         this.triggerJump();
 
-        // 2. 텍스트를 하트로 변경
-        const originalText = percent + "%";
-        if (this.progressText) {
-            this.progressText.textContent = "❤️";
-            this.progressText.style.fontSize = "16px";
-        }
+        // 1. 브라우저가 이동(left %) 계산을 끝낸 직후에 점프를 실행하도록 강제함
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                this.triggerJump(); // 거북이가 이동 중에 폴짝!
+            }, 50); // 아주 미세한 간격을 줘서 이동과 충돌 방지
+        });
 
-        // 3. 거북이 반짝임 효과 (기존 완주 로직 재활용)
-        this.turtleImg.classList.add('turtle-celebration');
-
-        // 4. 1초 후 원복
+        // 2. 점프해서 공중에 떠 있을 때(약 0.3~0.4초 뒤) 하트가 나타남
         setTimeout(() => {
             if (this.progressText) {
-                this.progressText.textContent = originalText;
+                this.progressText.textContent = "❤️";
+                this.progressText.style.fontSize = "16px";
+            }
+            this.turtleImg.classList.add('turtle-celebration');
+            console.log("❤️ 하트 등장!");
+        }, 600); 
+
+        // 3. 연출 종료 및 원복
+        setTimeout(() => {
+            if (this.progressText) {
+                this.progressText.textContent = percent + "%";
                 this.progressText.style.fontSize = "11px";
             }
             this.turtleImg.classList.remove('turtle-celebration');
             this.isEventRunning = false;
-            console.log("🔄 하트 연출 종료");
-        }, 1000);
+            console.log("🔄 연출 종료 및 정상 복구");
+        }, 2000); 
     }
+
+
+
 
     // ============================================
     // 1~2시간: 점프 애니메이션
