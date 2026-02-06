@@ -2,10 +2,6 @@
 .turtle_container {
     position: relative;
     /* 중요: 이게 있어야 말풍선이 거북이를 따라다닙니다! */
-}
-
-/* 2. 하얀색 말풍선 본체 */
-.progress-bubble {
     position: absolute;
     /* 거북이 몸 위로 띄우기 */
     top: -65px;
