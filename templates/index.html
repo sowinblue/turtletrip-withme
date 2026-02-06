@@ -28,7 +28,11 @@
             <h2>거북이의 여행 🐢</h2>
 
             <div class="turtle_moveline-section">
-                <div class="turtle_container" style="left: {{ rate }}%;"> <img id="turtle_img" class="turtle"
+                <div class="turtle_container" style="left: {{ rate }}%;">
+                    <div class="progress-bubble"> <!--말풍선 모양 잡는 부분-->
+                        <span class="progress-text">{{ rate }}%</span> <!--내용물-->
+                    </div>
+                    <img id="turtle_img" class="turtle"
                         src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
