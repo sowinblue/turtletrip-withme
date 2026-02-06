@@ -1,4 +1,20 @@
 {
-    "tasks": [],
+    "tasks": [
+        {
+            "id": "a55128a9",
+            "content": "1",
+            "is_done": false
+        },
+        {
+            "id": "5d16fdf9",
+            "content": "2",
+            "is_done": false
+        },
+        {
+            "id": "1c187b61",
+            "content": "3",
+            "is_done": false
+        }
+    ],
     "Event_rate": 50
 }
