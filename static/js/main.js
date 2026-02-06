@@ -7,10 +7,15 @@
  * - 거북이 업데이트
  */
 
-// 전역 변수로 이전 진행률 저장 (초기값은 html의 rate로 설정)
-let previousRate = parseInt("{{ rate }}") || 0;
+// 전역 변수로 이전 진행률 저장
+let previousRate = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 초기값 세팅
+    const initialRateElem = document.querySelector('.progress-text');
+    if (initialRateElem) {
+        previousRate = parseInt(initialRateElem.textContent) || 0;
+    }
     console.log("✅ main.js 로드 완료");
 
     // 모든 체크박스 선택
