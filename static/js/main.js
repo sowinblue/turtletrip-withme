@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 특정 조건일 때 이벤트 플래그를 전송
                     const isEventTriggered = (rate === 50);
                     window.updateTurtle(rate, isEventTriggered);
-                    console.log('🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})');
+                    console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
                 } else {
                     console.warn("⚠️ window.updateTurtle 함수를 찾을 수 없습니다.");
                 }
