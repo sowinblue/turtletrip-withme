@@ -11,7 +11,7 @@ class TurtleAnimation {
 
         // 2. 이전 진행률 저장 (점프 트리거용)
         this.previousRate = 0;
-        
+
         // 3. 완주 상태 플래그
         this.isCompleted = false;
 
@@ -26,22 +26,31 @@ class TurtleAnimation {
 
         if (this.turtleContainer && this.progressBar) {
             console.log("✅ 모든 요소 준비 완료! 이제 명령을 기다립니다.");
-        } 
+        }
     }
 
     // ============================================
     // 1~2시간: 점프 애니메이션
     // ============================================
+
+
     triggerJump() {
-        if (!this.turtleImg) return; // ! 예외 처리: 터틀 이미지가 없을 때 그냥 리턴
+        // ★ wrapper 요소 찾기 (HTML에서 추가한 .turtle-wrapper)
+        const turtleWrapper = document.querySelector('.turtle-wrapper');
 
-        // 점프 클래스 추가
-        this.turtleImg.classList.add('jump-animation');
+        if (!turtleWrapper) {
+            console.error("❌ turtle-wrapper를 찾을 수 없어요!");
+            return;
+        }
 
-        // 애니메이션 끝나면 클래스 제거 (재사용 가능하도록)
+        // ★ wrapper에 점프 애니메이션 적용
+        turtleWrapper.style.transition = 'transform 0.5s ease';
+        turtleWrapper.style.transform = 'translateY(-30px)';
+
+        // 0.5초 후 원위치
         setTimeout(() => {
-            this.turtleImg.classList.remove('jump-animation');
-        }, 600); // 애니메이션 지속 시간과 동일
+            turtleWrapper.style.transform = 'translateY(0)';
+        }, 500);
 
         console.log("🐰 거북이 점프!");
     }
@@ -69,7 +78,7 @@ class TurtleAnimation {
         // 완주 상태 플래그 설정
         this.isCompleted = true;
     }
-    
+
     // 완주 연출 해제 (rate < 100일 때)
     removeCelebration() {
         if (!this.turtleImg || !this.moveline) return;
@@ -140,10 +149,10 @@ class TurtleAnimation {
         if (percent < 100 && this.isCompleted) {
             this.removeCelebration();
         }
-        
+
         // 현재 값을 이전 값으로 저장
         this.previousRate = percent;
-    } 
+    }
 }
 
 
@@ -152,15 +161,15 @@ let turtleAnimation;
 
 document.addEventListener('DOMContentLoaded', () => {
     turtleAnimation = new TurtleAnimation();
-    
+
     // 전역 함수로 제공 (외부에서 호출 가능)
-    window.updateTurtle = function(rate) {
+    window.updateTurtle = function (rate) {
         if (turtleAnimation) {
             turtleAnimation.updateUI(rate);
         } else {
             console.error("❌ 거북이 애니메이션이 초기화되지 않았습니다.");
         }
     };
-    
+
     console.log("✅ window.updateTurtle() 함수 사용 가능");
 });
