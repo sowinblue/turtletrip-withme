@@ -76,12 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Step 4: 거북이 업데이트 및 이벤트 트리거 전송
                 if (typeof window.updateTurtle === 'function') {
                     // 이벤트 발생 조건 정의 (나중에 서버 데이터와 연동 가능)
-                    const isEventTriggered = (rate === 50 || rate === 100);
+                    const isEventTriggered =
+                        ((previousRate < 50) && (rate >= 50)) ||
+                        ((previousRate < 100) && (rate >= 100));
+                    
                     window.updateTurtle(rate, isEventTriggered);
                     console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
                 } else {
                     console.warn("⚠️ window.updateTurtle 함수를 찾을 수 없습니다.");
                 }
+
+                // [필수 추가] 다음 비교를 위해 현재 값을 previousRate에 저장
+                previousRate = rate;
 
             } catch (error) {
                 console.error("❌ 오류 발생:", error);
