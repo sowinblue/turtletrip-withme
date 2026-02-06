@@ -7,6 +7,9 @@
  * - 거북이 업데이트
  */
 
+// 전역 변수로 이전 진행률 저장 (초기값은 html의 rate로 설정)
+let previousRate = parseInt("{{ rate }}") || 0;
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ main.js 로드 완료");
 
@@ -65,10 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.warn("⚠️ window.updateEnv 함수를 찾을 수 없습니다.");
                 }
 
-
                 // Step 4: 거북이 업데이트 및 이벤트 트리거 전송
                 if (typeof window.updateTurtle === 'function') {
-                    // 특정 조건일 때 이벤트 플래그를 전송
+                    // 이벤트 발생 조건 정의 (나중에 서버 데이터와 연동 가능)
                     const isEventTriggered = (rate === 50 || rate === 100);
                     window.updateTurtle(rate, isEventTriggered);
                     console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
