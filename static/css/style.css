@@ -54,8 +54,10 @@ body {
 .progress-container {
     margin-top: auto;
     width: 100%;
-    position: relative; /* z-index를 적용하려면 필요 */
-    z-index: 10; /* 배경보다 앞으로 나오도록 설정 */
+    position: relative;
+    /* z-index를 적용하려면 필요 */
+    z-index: 10;
+    /* 배경보다 앞으로 나오도록 설정 */
 }
 
 .progress-track {
