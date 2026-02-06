@@ -22,9 +22,23 @@ def index():
 
     tasks = data.get('tasks', [])
     calculation_rate = pc.calculate_completion_rate(tasks)
-    
-    # index.html 파일을 화면에 보여줌 (tasks 데이터를 함께 전달)
-    return render_template("index.html", tasks=data['tasks'], rate=calculation_rate)
+
+    # 배경 그라데이션 및 속도 계산
+    # 100일 때 원본 복귀
+    brightness = round(0.2 + (calculation_rate / 100) * 0.8, 2)
+    hue = int((100 - calculation_rate) * 2)
+    # 속도 조절: 0%일 때 60초(매우 느림) -> 100%일 때 30초(적당히 빠름)
+    speed = round(60.0 - (calculation_rate / 100) * 30.0, 1)
+
+    # index.html 파일을 화면에 보여줌 (tasks, rate 및 배경 관련 변수 전달)
+    return render_template(
+        "index.html", 
+        tasks=data['tasks'], 
+        rate=calculation_rate,
+        brightness=brightness,
+        hue=hue,
+        speed=speed
+    )
 
 # 사용자가 보낸 데이터를 받기 (할 일 추가)
 @app.route('/update_todo', methods=['POST'])
@@ -141,11 +155,6 @@ def get_progress():
     rate = pc.calculate_completion_rate(tasks)
 
     return jsonify({"rate": rate})
-
-@app.route('/background') #sb 24_배경에 접속하면 이 함수를 실행해라.
-def background():
-    return render_template('background/background.html') #templates폴더 안에 있는 html문법을 찾아옴. 
-    # 파이썬 코드 안에 있는 변수값을 html의 빈칸_{{flask문법}}에 끼워넣어줌
 
 # 이 파일을 직접 실행했을 때만 서버 실행
 if __name__ == '__main__':
