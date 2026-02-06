@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style-progress-bubble.css"> <!--style-progress-bubble.css 연결-->
 </head>
 
 <body>
@@ -19,7 +20,9 @@
         <section class="turtle-section">
             <div class="viewport">
                 <div id="target">
-                    <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+                    <div class="layer"></div>
+                    <div class="layer"></div>
+                    <div class="layer"></div>
                 </div>
             </div>
             <h2>거북이의 여행 🐢</h2>
@@ -52,39 +55,39 @@
                 {% for task in tasks %}
 
                 <div class="todo-item {{ 'completed' if task.is_done else '' }}">
-                    
-                <label class="checkbox-label">
-                    <input type="checkbox" 
-                        class="real-checkbox" 
-                        data-id="{{ task.id }}" 
-                        {% if task.is_done %}checked{% endif %}>
-                    <span class="checkmark"></span>
-                </label>
 
-                <span class="todo-text">{{ task.content }}</span>
-                <div class="more-menu-wrapper" style="margin-left: 10px;">
-                    <button type="button" onclick="toggleMenu('menu-{{ task.id }}')" style="background:none; border:none; cursor:pointer;">⋮</button>
-                    
-                    <div id="menu-{{ task.id }}" class="todo-menu" style="display: none; background: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                        <a href="/edit_todo/{{ task.id }}" style="font-size: 12px; margin-right: 5px;">수정</a>
-                        <form action="/delete_todo/{{ task.id }}" method="POST" style="display: inline;">
-                            <button type="submit" class="delete-btn">삭제</button>
-                        </form>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="real-checkbox" data-id="{{ task.id }}" {% if task.is_done
+                            %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <span class="todo-text">{{ task.content }}</span>
+                    <div class="more-menu-wrapper" style="margin-left: 10px;">
+                        <button type="button" onclick="toggleMenu('menu-{{ task.id }}')"
+                            style="background:none; border:none; cursor:pointer;">⋮</button>
+
+                        <div id="menu-{{ task.id }}" class="todo-menu"
+                            style="display: none; background: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                            <a href="/edit_todo/{{ task.id }}" style="font-size: 12px; margin-right: 5px;">수정</a>
+                            <form action="/delete_todo/{{ task.id }}" method="POST" style="display: inline;">
+                                <button type="submit" class="delete-btn">삭제</button>
+                            </form>
+                        </div>
+
                     </div>
-
-                </div>
                 </div>
                 {% endfor %}
         </section>
-        </div>
+    </div>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"defer></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/turtle.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/checklist.js') }}" defer></script>
 
     <script>
         let currentX = 0;
-        let speed = 45; 
+        let speed = 45;
         const target = document.getElementById('target');
         let lastTime = performance.now();
 
@@ -94,7 +97,7 @@
 
             const viewWidth = target.parentNode.clientWidth;
             const step = (viewWidth * 2 / speed) * delta;
-            
+
             currentX -= step;
 
             if (currentX <= -(viewWidth * 2)) {
