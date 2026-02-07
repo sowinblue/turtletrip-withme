@@ -17,7 +17,7 @@
 
     <div class="main-container">
 
-        <section class="turtle-section">
+        <section class="turtle-section">  <!--거북이가 움직이는 공간-->
             <div class="viewport">
                 <div id="target">
                     <div class="layer"></div><div class="layer"></div><div class="layer"></div>
@@ -30,8 +30,10 @@
                         src="{{ url_for('static', filename='images/turtle/turtle_idle.svg') }}" alt="거북이 대기" width="90">
                 </div>
             </div>
+        </section>
 
-            <div class="progress-container">
+        <section class="progress-bar-section"> <!--progress-container 분리-->
+            <div class="progress-container"> <!--turtle-section에서 이사 시킴_거북이 움직이는 공간과 분리-->
                 <div class="progress-track">
                     <div id="turtle-progress-bar" class="progress-fill" style="width: {{ rate }}%;">
                         <span class="progress-text">{{ rate }}%</span>
