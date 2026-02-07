@@ -7,7 +7,15 @@
  * - 거북이 업데이트
  */
 
+// 전역 변수로 이전 진행률 저장
+let previousRate = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 초기값 세팅
+    const initialRateElem = document.querySelector('.progress-text');
+    if (initialRateElem) {
+        previousRate = parseInt(initialRateElem.textContent) || 0;
+    }
     console.log("✅ main.js 로드 완료");
 
     // 모든 체크박스 선택
@@ -65,14 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.warn("⚠️ window.updateEnv 함수를 찾을 수 없습니다.");
                 }
 
-
-                // Step 4: 거북이 업데이트
+                // Step 4: 거북이 업데이트 및 이벤트 트리거 전송
                 if (typeof window.updateTurtle === 'function') {
-                    window.updateTurtle(rate);
-                    console.log("🐢 거북이 업데이트 완료");
+                    // 이벤트 발생 조건 정의 (나중에 서버 데이터와 연동 가능)
+                    const isEventTriggered =
+                        ((previousRate < 50) && (rate >= 50)) ||
+                        ((previousRate < 100) && (rate >= 100));
+                    
+                    window.updateTurtle(rate, isEventTriggered);
+                    console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
                 } else {
                     console.warn("⚠️ window.updateTurtle 함수를 찾을 수 없습니다.");
                 }
+
+                // [필수 추가] 다음 비교를 위해 현재 값을 previousRate에 저장
+                previousRate = rate;
 
             } catch (error) {
                 console.error("❌ 오류 발생:", error);
