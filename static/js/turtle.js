@@ -78,19 +78,32 @@ class TurtleAnimation {
     // 1~2시간: 점프 애니메이션
     // ============================================
     triggerJump() {
-        if (!this.turtleImg) return; // ! 예외 처리: 터틀 이미지가 없을 때 그냥 리턴
+        // ★ wrapper 요소 찾기 (HTML에서 추가한 .turtle-wrapper)
+        const turtleWrapper = document.querySelector('.turtle-wrapper');
 
-        // 점프 클래스 추가
-        this.turtleImg.classList.add('jump-animation');
+        if (!turtleWrapper) {
+            console.error("❌ turtle-wrapper를 찾을 수 없어요!");
+            return;
+        }
+
+       // ★ wrapper에 점프 애니메이션 적용
+        turtleWrapper.style.transition = 'transform 0.5s ease';
+        turtleWrapper.style.transform = 'translateY(-30px)';
+
+        // 0.5초 후 원위치
+
+        setTimeout(() => {
+            turtleWrapper.style.transform = 'translateY(0)';
+        }, 500);
 
         // 애니메이션 끝나면 클래스 제거 (재사용 가능하도록)
-        setTimeout(() => {
-            this.turtleImg.classList.remove('jump-animation');
-        }, 600); // 애니메이션 지속 시간과 동일
+        //     this.turtleImg.classList.remove('jump-animation');
+        // }, 600); // 애니메이션 지속 시간과 동일
 
         console.log("🐰 거북이 점프!");
     }
 
+    
     // ============================================
     // 2~3시간: 100% 완주 연출
     // ============================================
