@@ -54,8 +54,10 @@ body {
 .progress-container {
     margin-top: auto;
     width: 100%;
-    position: relative; /* z-index를 적용하려면 필요 */
-    z-index: 10; /* 배경보다 앞으로 나오도록 설정 */
+    position: relative;
+    /* z-index를 적용하려면 필요 */
+    z-index: 10;
+    /* 배경보다 앞으로 나오도록 설정 */
 }
 
 .progress-track {
@@ -64,24 +66,35 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
+    /* 추가! */
 }
 
 .progress-fill {
     height: 100%;
     background-color: #00f2fe;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     transition: width 0.5s ease;
+    position: relative;
+    /* 추가! */
 }
 
 .progress-text {
+    position: absolute;
+    /* 변경! */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 추가! */
     font-size: 11px;
     color: #333;
     font-weight: bold;
-    margin-right: 8px;
+    white-space: nowrap;
+    /* 추가! 텍스트 안 잘림 */
+    pointer-events: none;
+    /* 추가! 클릭 방해 안 함 */
 }
+
 
 /* Mobile (~768px) */
 @media (max-width: 768px) {
