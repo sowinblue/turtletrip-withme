@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 모든 체크박스 선택
     const checkboxes = document.querySelectorAll('.real-checkbox');
-    
+
     checkboxes.forEach(checkbox => {
         const todoItem = checkbox.closest('.todo-item');
-        
+
         // 초기 상태 반영
         if (checkbox.checked) {
             todoItem.classList.add('completed');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.addEventListener('change', async (event) => {
             // 기본 동작 차단 (혹시 모를 form submit 방지)
             event.preventDefault();
-            
+
             const taskId = checkbox.getAttribute('data-id');
             const isChecked = checkbox.checked;
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!toggleResponse.ok) {
                     throw new Error('상태 변경 실패');
                 }
-                
+
                 const result = await toggleResponse.json();
                 const rate = result.new_rate;
 
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const brightness = 0.2 + (rate / 100) * 0.8;
                 const hue = (100 - rate) * 2;
                 const speed = 60.0 - (rate / 100) * 30.0;
-                
+
                 if (typeof window.updateEnv === 'function') {
                     window.updateEnv(rate, brightness, hue, speed);
                     console.log(`🌌 배경 업데이트: B:${brightness.toFixed(2)} H:${hue} S:${speed.toFixed(1)}`);
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isEventTriggered =
                         ((previousRate < 50) && (rate >= 50)) ||
                         ((previousRate < 100) && (rate >= 100));
-                    
+
                     window.updateTurtle(rate, isEventTriggered);
                     console.log(`🐢 거북이 업데이트 완료 ( 이벤트 여부: ${isEventTriggered})`);
                 } else {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } catch (error) {
                 console.error("❌ 오류 발생:", error);
-                
+
                 // 실패 시 UI 복구
                 checkbox.checked = !isChecked;
                 todoItem.classList.toggle('completed', !isChecked);
@@ -102,20 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /**
- * 진행률 UI 업데이트 함수
+ * 진행률 UI 업데이트 함수 (수정본)
  */
 function updateProgressUI(rate) {
-    // 진행률 바
     const progressBar = document.querySelector('#turtle-progress-bar');
     if (progressBar) {
+        // 1. 바의 너비 변경
         progressBar.style.width = `${rate}%`;
+        // 2. [수정] 바 '내부'에 있는 텍스트만 찾아서 변경
+        const barText = progressBar.querySelector('.progress-text');
+        if (barText) barText.textContent = `${rate}%`;
     }
 
-    // 퍼센트 텍스트
-    const progressText = document.querySelector('.progress-text');
-    if (progressText) {
-        progressText.textContent = `${rate}%`;
-    }
+    // 3. [추가] 말풍선(bubble) 안에 있는 텍스트도 별도로 찾아서 변경
+    const bubbleText = document.querySelector('.progress-bubble .progress-text');
+    if (bubbleText) bubbleText.textContent = `${rate}%`;
 
     console.log(`📈 진행률 UI 업데이트: ${rate}%`);
 }
