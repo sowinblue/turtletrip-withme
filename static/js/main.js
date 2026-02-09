@@ -101,22 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/**
- * 진행률 UI 업데이트 함수 (수정본)
- */
 function updateProgressUI(rate) {
     const progressBar = document.querySelector('#turtle-progress-bar');
     if (progressBar) {
-        // 1. 바의 너비 변경
         progressBar.style.width = `${rate}%`;
-        // 2. [수정] 바 '내부'에 있는 텍스트만 찾아서 변경
         const barText = progressBar.querySelector('.progress-text');
         if (barText) barText.textContent = `${rate}%`;
     }
 
-    // 3. [추가] 말풍선(bubble) 안에 있는 텍스트도 별도로 찾아서 변경
     const bubbleText = document.querySelector('.progress-bubble .progress-text');
-    if (bubbleText) bubbleText.textContent = `${rate}%`;
+    if (bubbleText) {
+        bubbleText.textContent = `${rate}%`;
+        // 100%일 때 작아지지 않도록 크기 고정
+        if (rate === 100) bubbleText.style.fontSize = "18px";
+    }
 
-    console.log(`📈 진행률 UI 업데이트: ${rate}%`);
+    // [체크박스 복구] 배경 및 거북이 상태 업데이트 필수 호출
+    if (typeof window.updateEnv === 'function') {
+        window.updateEnv(rate, 0.2 + (rate / 100) * 0.8, (100 - rate) * 2, 60.0 - (rate / 100) * 30.0);
+    }
+    if (typeof window.updateTurtle === 'function') {
+        window.updateTurtle(rate, (previousRate < 100 && rate >= 100));
+    }
 }

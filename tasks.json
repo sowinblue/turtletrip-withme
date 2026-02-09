@@ -1,0 +1,20 @@
+{
+    "tasks": [
+        {
+            "id": "9a8908e9",
+            "content": "할 일",
+            "is_done": false
+        },
+        {
+            "id": "de6a7eb6",
+            "content": "할일 둘",
+            "is_done": false
+        },
+        {
+            "id": "5c8dcfa0",
+            "content": "또 할 일",
+            "is_done": false
+        }
+    ],
+    "Event_rate": 50
+}

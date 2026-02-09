@@ -55,9 +55,7 @@ body {
     margin-top: auto;
     width: 100%;
     position: relative;
-    /* z-index를 적용하려면 필요 */
     z-index: 10;
-    /* 배경보다 앞으로 나오도록 설정 */
 }
 
 .progress-track {
@@ -67,7 +65,6 @@ body {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    /* 추가! */
 }
 
 .progress-fill {
@@ -76,23 +73,21 @@ body {
     border-radius: 10px;
     transition: width 0.5s ease;
     position: relative;
-    /* 추가! */
 }
 
-.progress-text {
+/* 진행률 바 안의 텍스트 */
+.progress-fill .progress-text {
     position: absolute;
-    /* 변경! */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* 추가! */
     font-size: 11px;
     color: #333;
     font-weight: bold;
     white-space: nowrap;
-    /* 추가! 텍스트 안 잘림 */
     pointer-events: none;
-    /* 추가! 클릭 방해 안 함 */
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
+    z-index: 10;
 }
 
 
@@ -121,7 +116,7 @@ body {
         height: 14px;
     }
 
-    .progress-text {
+    .progress-fill .progress-text {
         font-size: 10px;
     }
 }
